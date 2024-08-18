@@ -8,10 +8,10 @@ VALUES
     ('Av. da Universidade, 2853', 'Fortaleza', 'CE', 'Brasil', '60020-181');   -- UFC
 
 -- Insert institutions
-INSERT INTO institutions (name, address_id, type, contact)
+INSERT INTO institutions (name, address_id, contact)
 VALUES
-    ('Universidade Federal do Rio Grande do Norte', 1, 'Universidade', 'contato@ufrn.br'), -- UFRN
-    ('Universidade Federal do Ceará', 2, 'Universidade', 'contato@ufc.br');                -- UFC
+    ('Universidade Federal do Rio Grande do Norte', 1, 'contato@ufrn.br'), -- UFRN
+    ('Universidade Federal do Ceará', 2, 'contato@ufc.br');                -- UFC
 
 -- Insert roles
 INSERT INTO roles (name)

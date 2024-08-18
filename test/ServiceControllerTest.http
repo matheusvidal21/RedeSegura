@@ -1,11 +1,11 @@
 ### Get All Services
-GET http://localhost:8080/rede-segura/services
+GET http://localhost:8080/rede-segura/api/services
 
 ### Get Service by ID
-GET http://localhost:8080/rede-segura/services/1
+GET http://localhost:8080/rede-segura/api/services/1
 
 ### Create a New Service
-POST http://localhost:8080/rede-segura/services
+POST http://localhost:8080/rede-segura/api/services
 Content-Type: application/json
 
 {
@@ -18,7 +18,7 @@ Content-Type: application/json
 }
 
 ### Update a Service
-PUT http://localhost:8080/rede-segura/services/21
+PUT http://localhost:8080/rede-segura/api/services/21
 Content-Type: application/json
 
 {
@@ -31,4 +31,4 @@ Content-Type: application/json
 }
 
 ### Delete a Service
-DELETE http://localhost:8080/rede-segura/services/21
+DELETE http://localhost:8080/rede-segura/api/services/21

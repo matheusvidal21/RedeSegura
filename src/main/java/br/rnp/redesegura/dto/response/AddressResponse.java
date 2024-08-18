@@ -23,4 +23,9 @@ public class AddressResponse {
 
     private String postalCode;
 
+    public String getFullAddress() {
+        return String.format("%s, %s - %s, %s, CEP: %s",
+                street, city, state, country, postalCode);
+    }
+
 }

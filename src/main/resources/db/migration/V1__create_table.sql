@@ -15,7 +15,6 @@ CREATE TABLE IF NOT EXISTS institutions (
                                             id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                             name VARCHAR(255) NOT NULL,
                                             address_id BIGINT,
-                                            type VARCHAR(100),
                                             contact VARCHAR(255),
                                             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

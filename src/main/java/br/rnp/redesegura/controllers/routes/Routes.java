@@ -2,18 +2,34 @@ package br.rnp.redesegura.controllers.routes;
 
 public interface Routes {
 
-    String USERS = "/users";
+    String API = "/api";
 
-    String VULNERABILITIES = "/vulnerabilities";
+    String USERS = API + "/users";
 
-    String INSTITUTIONS = "/institutions";
+    String VULNERABILITIES = API + "/vulnerabilities";
 
-    String SERVERS = "/servers";
+    String INSTITUTIONS = API + "/institutions";
 
-    String SERVICES = "/services";
+    String SERVERS = API + "/servers";
 
-    String VULNERABILITY_TEST = "/vulnerability-test";
+    String SERVICES = API + "/services";
 
-    String DASHBOARD = "/dashboard";
+    String VULNERABILITY_TEST = API + "/vulnerability-test";
+
+    String DASHBOARD = API + "/dashboard";
+
+    // View
+
+    String INSTITUTIONS_VIEW = "/institutions";
+
+    String SERVERS_VIEW = "/servers";
+
+    String SERVICES_VIEW = "/services";
+
+    String VULNERABILITIES_VIEW = "/vulnerabilities";
+
+    String VULNERABILITY_TEST_VIEW = "/vulnerability-test";
+
+
 
 }

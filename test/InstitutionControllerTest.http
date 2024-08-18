@@ -1,17 +1,17 @@
 ### Get All Institutions
-GET http://localhost:8080/rede-segura/institutions
+GET http://localhost:8080/rede-segura/api/institutions
 Accept: application/json
 
 ###
 
 ### Get Institution by ID
-GET http://localhost:8080/rede-segura/institutions/1
+GET http://localhost:8080/rede-segura/api/institutions/1
 Accept: application/json
 
 ###
 
 ### Create a New Institution
-POST http://localhost:8080/rede-segura/institutions
+POST http://localhost:8080/rede-segura/api/institutions
 Content-Type: application/json
 
 {
@@ -31,7 +31,7 @@ Content-Type: application/json
 ###
 
 ### Update an Existing Institution
-PUT http://localhost:8080/rede-segura/institutions/3
+PUT http://localhost:8080/rede-segura/api/institutions/3
 Content-Type: application/json
 
 {
@@ -51,5 +51,5 @@ Content-Type: application/json
 ###
 
 ### Delete an Institution
-DELETE http://localhost:8080/rede-segura/institutions/4
+DELETE http://localhost:8080/rede-segura/api/institutions/4
 Accept: application/json

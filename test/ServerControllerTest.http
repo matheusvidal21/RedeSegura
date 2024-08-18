@@ -1,17 +1,17 @@
 ### Get All Servers
-GET http://localhost:8080/rede-segura/servers
+GET http://localhost:8080/rede-segura/api/servers
 Accept: application/json
 
 ###
 
 ### Get Server by ID
-GET http://localhost:8080/rede-segura/servers/3
+GET http://localhost:8080/rede-segura/api/servers/3
 Accept: application/json
 
 ###
 
 ### Create Server
-POST http://localhost:8080/rede-segura/servers
+POST http://localhost:8080/rede-segura/api/servers
 Content-Type: application/json
 
 {
@@ -24,7 +24,7 @@ Content-Type: application/json
 ###
 
 ### Update Server
-PUT http://localhost:8080/rede-segura/servers/3
+PUT http://localhost:8080/rede-segura/api/servers/3
 Content-Type: application/json
 
 {
@@ -37,4 +37,4 @@ Content-Type: application/json
 ###
 
 ### Delete Server
-DELETE http://localhost:8080/rede-segura/servers/5
+DELETE http://localhost:8080/rede-segura/api/servers/5

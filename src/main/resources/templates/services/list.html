@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:replace="layouts/base :: pageTitle">Serviços</title>
+</head>
+<body>
+<div th:replace="layouts/base :: content">
+    <h1>Serviços</h1>
+    <a th:href="@{/services/create}" class="btn btn-primary">Novo Serviço</a>
+    <table>
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>IP</th>
+            <th>Porta</th>
+            <th>Status</th>
+            <th>Servidor</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="service : ${services}">
+            <td th:text="${service.name}"></td>
+            <td th:text="${service.ip}"></td>
+            <td th:text="${service.port}"></td>
+            <td th:text="${service.status}"></td>
+            <td th:text="${service.serverName}"></td>
+            <td>
+                <a th:href="@{/services/edit/{id}(id=${service.id})}">Editar</a> |
+                <a th:href="@{/services/delete/{id}(id=${service.id})}">Excluir</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
