@@ -2,6 +2,7 @@ package br.rnp.redesegura.strategy;
 
 import br.rnp.redesegura.dto.response.VulnerabilityTestResponse;
 import br.rnp.redesegura.exception.FailedTestException;
+import br.rnp.redesegura.models.Protocol;
 import br.rnp.redesegura.models.Vulnerability;
 import br.rnp.redesegura.models.enums.TestStatus;
 
@@ -10,13 +11,15 @@ import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
-public class DnsRecursionTestStrategy implements VulnerabilityTestStrategy {
+public class MysqlExposedTestStrategy implements VulnerabilityTestStrategy {
     @Override
     public VulnerabilityTestResponse test(Vulnerability vulnerability) {
         try {
             String ip = vulnerability.getService().getIp();
-            // Comando dig a ser executado
-            String command = "wsl dig google.com A @" + ip;
+            Long port = vulnerability.getService().getPort();
+
+            // Comando nc a ser executado
+            String command = "wsl nc -w 2 " + ip + " " + port;
 
             // Executa o comando
             ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));
@@ -24,16 +27,7 @@ public class DnsRecursionTestStrategy implements VulnerabilityTestStrategy {
 
             // Captura a saída do comando
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line;
-            boolean isVulnerable = false;
-
-            // Analisa a saída
-            while ((line = reader.readLine()) != null) {
-                if (line.contains("flags:") && line.contains("ra")) {
-                    isVulnerable = true;
-                    break;
-                }
-            }
+            String output = reader.lines().collect(Collectors.joining("\n"));
 
             process.waitFor();
 
@@ -42,22 +36,26 @@ public class DnsRecursionTestStrategy implements VulnerabilityTestStrategy {
                     .vulnerabilityTitle(vulnerability.getTitle())
                     .service(vulnerability.getService().getName())
                     .ip(ip)
-                    .port(vulnerability.getService().getPort())
-                    .protocols(vulnerability.getService().getProtocols().stream().map(protocol -> protocol.getName()).collect(Collectors.toSet()))
+                    .port(port)
+                    .protocols(vulnerability.getService().getProtocols().stream().map(Protocol::getName).collect(Collectors.toSet()))
                     .testedAt(LocalDateTime.now().toString())
                     .build();
 
-            if (isVulnerable){
+            // Verifica a resposta
+            if (output.contains("caching_sha2_password") || output.contains("mysql_native_password")) {
                 vulnerabilityTestResponse.setTestStatus(TestStatus.VULNERABLE);
-                vulnerabilityTestResponse.setTestResultMessage("O serviço DNS está vulnerável à recursão, permitindo possíveis ataques de DDoS. A configuração atual permite que solicitações de recursão sejam processadas, o que pode ser explorado por atacantes.");
-            } else {
+                vulnerabilityTestResponse.setTestResultMessage("O serviço MySQL está exposto e permite conexões não autenticadas. O cabeçalho do MySQL foi retornado, indicando vulnerabilidade.");
+            } else if (output.isEmpty()) {
                 vulnerabilityTestResponse.setTestStatus(TestStatus.NOT_VULNERABLE);
-                vulnerabilityTestResponse.setTestResultMessage("O serviço DNS não está vulnerável à recursão. A configuração atual bloqueia solicitações de recursão, mitigando a possibilidade de ataques de DDoS.");
+                vulnerabilityTestResponse.setTestResultMessage("O serviço MySQL não está exposto ou não respondeu a uma tentativa de conexão não autenticada.");
+            } else {
+                vulnerabilityTestResponse.setTestStatus(TestStatus.FAILED);
+                vulnerabilityTestResponse.setTestResultMessage("Não foi possível determinar o status da vulnerabilidade com base na resposta recebida.");
             }
 
             return vulnerabilityTestResponse;
         } catch (Exception e) {
-            throw new FailedTestException(String.format("Failed to test vulnerability: " + e.getMessage()), e);
+            throw new FailedTestException(String.format("Failed to test MySQL vulnerability: " + e.getMessage()), e);
         }
     }
 }
