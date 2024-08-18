@@ -16,4 +16,6 @@ public interface Routes {
 
     String SYSTEMS = "/systems";
 
+    String ACTION_LOGS = "/action-logs";
+
 }

@@ -5,6 +5,7 @@ import br.rnp.redesegura.dto.response.NotificationResponse;
 import br.rnp.redesegura.models.Notification;
 import br.rnp.redesegura.models.User;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class NotificationMapper {
@@ -27,13 +28,7 @@ public class NotificationMapper {
                 .recipient(recipient)
                 .message(notificationDto.getMessage())
                 .isRead(notificationDto.getRead())
-                .build();
-    }
-
-    public static Notification toEntity(NotificationDto notificationDto) {
-        return Notification.builder()
-                .message(notificationDto.getMessage())
-                .isRead(notificationDto.getRead())
+                .timestamp(LocalDateTime.now())
                 .build();
     }
 

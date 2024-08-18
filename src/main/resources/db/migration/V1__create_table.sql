@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS users (
                                      institution_id BIGINT,
                                      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                                     FOREIGN KEY (institution_id) REFERENCES institutions(id)
+                                     FOREIGN KEY (institution_id) REFERENCES institutions(id) ON DELETE CASCADE
 );
 
 -- Create Role table
@@ -60,8 +60,8 @@ CREATE TABLE IF NOT EXISTS systems (
                                        responsible_id BIGINT,
                                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                                       FOREIGN KEY (institution_id) REFERENCES institutions(id),
-                                       FOREIGN KEY (responsible_id) REFERENCES users(id)
+                                       FOREIGN KEY (institution_id) REFERENCES institutions(id) ON DELETE CASCADE,
+                                       FOREIGN KEY (responsible_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
 -- Create Vulnerability table
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS vulnerabilities (
                                                system_id BIGINT,
                                                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                                resolved_at TIMESTAMP,
-                                               FOREIGN KEY (system_id) REFERENCES systems(id)
+                                               FOREIGN KEY (system_id) REFERENCES systems(id) ON DELETE CASCADE
 );
 
 -- Create ActionLog table
@@ -84,8 +84,8 @@ CREATE TABLE IF NOT EXISTS action_log (
                                           action TEXT,
                                           performed_by BIGINT,
                                           timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                                          FOREIGN KEY (vulnerability_id) REFERENCES vulnerabilities(id),
-                                          FOREIGN KEY (performed_by) REFERENCES users(id)
+                                          FOREIGN KEY (vulnerability_id) REFERENCES vulnerabilities(id) ON DELETE CASCADE,
+                                          FOREIGN KEY (performed_by) REFERENCES users(id) ON DELETE CASCADE
 );
 
 -- Create Report table
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS reports (
                                        generated_by BIGINT,
                                        content TEXT,
                                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                                       FOREIGN KEY (generated_by) REFERENCES users(id)
+                                       FOREIGN KEY (generated_by) REFERENCES users(id) ON DELETE CASCADE
 );
 
 -- Create Tool table
@@ -112,5 +112,5 @@ CREATE TABLE IF NOT EXISTS notifications (
                                              message TEXT,
                                              is_read BOOLEAN DEFAULT FALSE,
                                              timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                                             FOREIGN KEY (recipient_id) REFERENCES users(id)
+                                             FOREIGN KEY (recipient_id) REFERENCES users(id) ON DELETE CASCADE
 );

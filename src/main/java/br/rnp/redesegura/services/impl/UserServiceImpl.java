@@ -58,6 +58,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse create(UserDto user) {
         validate(user);
+        if( this.roleRepository.findAllById(user.getRolesIds()).size() != user.getRolesIds().size()){
+            throw new BadRequestException("Roles not found");
+        }
         Set<Role> roles = new HashSet<>(this.roleRepository.findAllById(user.getRolesIds()));
         Institution institution = this.institutionRepository.findById(user.getInstitutionId()).get();
         User entity = UserMapper.toEntity(user, institution, roles);
@@ -83,12 +86,15 @@ public class UserServiceImpl implements UserService {
             throw new BadRequestException("Institution not found");
         }
 
-        List<Role> roles = this.roleRepository.findAllById(user.getRolesIds());
+        if( this.roleRepository.findAllById(user.getRolesIds()).size() != user.getRolesIds().size()){
+            throw new BadRequestException("Roles not found");
+        }
+        Set<Role> roles = new HashSet<>(this.roleRepository.findAllById(user.getRolesIds()));
 
         entity.setName(user.getName());
         entity.setInstitution(this.institutionRepository.findById(user.getInstitutionId()).get());
         entity.setUpdatedAt(LocalDateTime.now());
-        entity.setRoles(new HashSet<>(roles));
+        entity.setRoles(roles);
         entity.setEmail(user.getEmail());
 
         return UserMapper.toResponse(this.userRepository.save(entity));

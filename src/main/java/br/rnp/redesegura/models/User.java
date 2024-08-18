@@ -11,7 +11,9 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -68,6 +70,16 @@ public class User {
         public long getRoleId() {
             return roleId;
         }
+
+        public Values getRoleById(long roleId) {
+            for (Values value : Values.values()) {
+                if (value.getRoleId() == roleId) {
+                    return value;
+                }
+            }
+            return null;
+        }
+
     }
 
     public boolean isAdmin() {

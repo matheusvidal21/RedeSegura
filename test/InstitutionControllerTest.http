@@ -1,0 +1,55 @@
+### Get All Institutions
+GET http://localhost:8080/rede-segura/institutions
+Accept: application/json
+
+###
+
+### Get Institution by ID
+GET http://localhost:8080/rede-segura/institutions/1
+Accept: application/json
+
+###
+
+### Create a New Institution
+POST http://localhost:8080/rede-segura/institutions
+Content-Type: application/json
+
+{
+  "name": "Instituto Federal de Educação",
+  "address": {
+    "street": "Rua das Flores, 123",
+    "city": "Natal",
+    "state": "RN",
+    "country": "Brasil",
+    "postalCode": "59000-000"
+  },
+  "type": "Universidade",
+  "contact": "contato@if.edu.br"
+}
+
+
+###
+
+### Update an Existing Institution
+PUT http://localhost:8080/rede-segura/institutions/3
+Content-Type: application/json
+
+{
+  "name": "Instituto Federal de Educação E Tecnologia",
+  "address": {
+    "street": "Rua da Ametista, 123",
+    "city": "Sao Paulo",
+    "state": "RN",
+    "country": "Brasil",
+    "postalCode": "59000-000"
+  },
+  "type": "Universidade",
+  "contact": "contato@if.edu.br"
+}
+
+
+###
+
+### Delete an Institution
+DELETE http://localhost:8080/rede-segura/institutions/4
+Accept: application/json

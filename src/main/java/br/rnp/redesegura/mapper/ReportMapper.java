@@ -5,6 +5,7 @@ import br.rnp.redesegura.dto.response.ReportResponse;
 import br.rnp.redesegura.models.Report;
 import br.rnp.redesegura.models.User;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class ReportMapper {
@@ -26,12 +27,7 @@ public class ReportMapper {
         return Report.builder()
                 .generatedBy(generatedBy)
                 .content(reportDto.getContent())
-                .build();
-    }
-
-    public static Report toEntity(ReportDto reportDto) {
-        return Report.builder()
-                .content(reportDto.getContent())
+                .createdAt(LocalDateTime.now())
                 .build();
     }
 

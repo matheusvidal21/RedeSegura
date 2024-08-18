@@ -4,13 +4,11 @@ package br.rnp.redesegura.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
@@ -18,8 +16,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 public class UpdateUserDto {
-
-    private Long id;
 
     @NotBlank(message = "Name is required")
     private String name;
@@ -31,7 +27,7 @@ public class UpdateUserDto {
     @NotNull(message = "Roles are required")
     private Set<Long> rolesIds;
 
-    @NotBlank(message = "Institution is required")
+    @NotNull(message = "Institution is required")
     private Long institutionId;
 
 }

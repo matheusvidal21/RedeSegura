@@ -1,5 +1,7 @@
 package br.rnp.redesegura.models.enums;
 
+import java.util.Arrays;
+
 public enum Severity {
 
     LOW("Low"),
@@ -18,12 +20,10 @@ public enum Severity {
     }
 
     public static Severity fromValue(String value) {
-        for (Severity severity : Severity.values()) {
-            if (severity.getValue().equals(value)) {
-                return severity;
-            }
-        }
-        return null;
+        return Arrays.stream(Severity.values())
+                .filter(severity -> severity.getValue().equalsIgnoreCase(value))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Invalid severity value: " + value));
     }
 
 }

@@ -2,6 +2,7 @@ package br.rnp.redesegura.services.impl;
 
 import br.rnp.redesegura.dto.AddressDto;
 import br.rnp.redesegura.dto.response.AddressResponse;
+import br.rnp.redesegura.exception.NotFoundException;
 import br.rnp.redesegura.mapper.AddressMapper;
 import br.rnp.redesegura.models.Address;
 import br.rnp.redesegura.repositories.AddressRepository;
@@ -27,7 +28,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public AddressResponse findById(Long id) {
-        Address address = addressRepository.findById(id).orElseThrow(() -> new RuntimeException("Address not found"));
+        Address address = addressRepository.findById(id).orElseThrow(() -> new NotFoundException("Address not found"));
         return AddressMapper.toResponse(address);
     }
 
@@ -39,7 +40,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public AddressResponse update(Long id, AddressDto addressDto) {
-        Address existingAddress = addressRepository.findById(id).orElseThrow(() -> new RuntimeException("Address not found"));
+        Address existingAddress = addressRepository.findById(id).orElseThrow(() -> new NotFoundException("Address not found"));
         Address updatedAddress = AddressMapper.toEntity(addressDto);
         updatedAddress.setId(existingAddress.getId());
         return AddressMapper.toResponse(addressRepository.save(updatedAddress));

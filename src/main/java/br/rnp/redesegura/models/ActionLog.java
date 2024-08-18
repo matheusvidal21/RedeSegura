@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 
@@ -21,14 +23,16 @@ public class ActionLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "vulnerability_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Vulnerability vulnerability;
 
     private String action;
 
     @ManyToOne
     @JoinColumn(name = "performed_by")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User performedBy;
 
     @CreationTimestamp

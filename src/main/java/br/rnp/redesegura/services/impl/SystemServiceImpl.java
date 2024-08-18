@@ -38,7 +38,7 @@ public class SystemServiceImpl implements SystemService {
 
     @Override
     public SystemResponse findById(Long id) {
-        System systemEntity = systemRepository.findById(id).orElseThrow(() -> new RuntimeException("System not found"));
+        System systemEntity = systemRepository.findById(id).orElseThrow(() -> new NotFoundException("System not found"));
         return SystemMapper.toResponse(systemEntity);
     }
 
@@ -52,7 +52,7 @@ public class SystemServiceImpl implements SystemService {
 
     @Override
     public SystemResponse update(Long id, SystemDto systemDto) {
-        System existingSystem = systemRepository.findById(id).orElseThrow(() -> new RuntimeException("System not found"));
+        System existingSystem = systemRepository.findById(id).orElseThrow(() -> new NotFoundException("System not found"));
         User user = userRepository.findById(systemDto.getResponsibleId()).orElseThrow(() -> new NotFoundException("User not found"));
         Institution institution = institutionRepository.findById(systemDto.getInstitutionId()).orElseThrow(() -> new NotFoundException("Institution not found"));
         System updatedSystem = SystemMapper.toEntity(systemDto, institution, user);
@@ -62,6 +62,7 @@ public class SystemServiceImpl implements SystemService {
 
     @Override
     public void delete(Long id) {
+        var system = systemRepository.findById(id).orElseThrow(() -> new NotFoundException("System not found"));
         systemRepository.deleteById(id);
     }
 

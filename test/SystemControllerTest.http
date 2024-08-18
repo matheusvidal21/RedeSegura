@@ -1,0 +1,40 @@
+### Get All Systems
+GET http://localhost:8080/rede-segura/systems
+Accept: application/json
+
+###
+
+### Get System by ID
+GET http://localhost:8080/rede-segura/systems/3
+Accept: application/json
+
+###
+
+### Create System
+POST http://localhost:8080/rede-segura/systems
+Content-Type: application/json
+
+{
+  "name": "System 1",
+  "description": "System Description",
+  "institutionId": 1,
+  "responsibleId": 1
+}
+
+###
+
+### Update System
+PUT http://localhost:8080/rede-segura/systems/3
+Content-Type: application/json
+
+{
+  "name": "Updated System",
+  "description": "Updated Description",
+  "institutionId": 1,
+  "responsibleId": 1
+}
+
+###
+
+### Delete System
+DELETE http://localhost:8080/rede-segura/systems/5

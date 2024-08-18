@@ -7,6 +7,7 @@ import br.rnp.redesegura.models.ActionLog;
 import br.rnp.redesegura.models.User;
 import br.rnp.redesegura.models.Vulnerability;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class ActionLogMapper {
@@ -29,12 +30,7 @@ public class ActionLogMapper {
                 .vulnerability(vulnerability)
                 .action(actionLogDto.getAction())
                 .performedBy(performedBy)
-                .build();
-    }
-
-    public static ActionLog toEntity(ActionLogDto actionLogDto) {
-        return ActionLog.builder()
-                .action(actionLogDto.getAction())
+                .timestamp(LocalDateTime.now())
                 .build();
     }
 

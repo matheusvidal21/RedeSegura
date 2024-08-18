@@ -2,6 +2,7 @@ package br.rnp.redesegura.services.impl;
 
 import br.rnp.redesegura.dto.ToolDto;
 import br.rnp.redesegura.dto.response.ToolResponse;
+import br.rnp.redesegura.exception.NotFoundException;
 import br.rnp.redesegura.mapper.ToolMapper;
 import br.rnp.redesegura.models.Tool;
 import br.rnp.redesegura.repositories.ToolRepository;
@@ -27,7 +28,7 @@ public class ToolServiceImpl implements ToolService {
 
     @Override
     public ToolResponse findById(Long id) {
-        Tool tool = toolRepository.findById(id).orElseThrow(() -> new RuntimeException("Tool not found"));
+        Tool tool = toolRepository.findById(id).orElseThrow(() -> new NotFoundException("Tool not found"));
         return ToolMapper.toResponse(tool);
     }
 
@@ -39,7 +40,7 @@ public class ToolServiceImpl implements ToolService {
 
     @Override
     public ToolResponse update(Long id, ToolDto toolDto) {
-        Tool existingTool = toolRepository.findById(id).orElseThrow(() -> new RuntimeException("Tool not found"));
+        Tool existingTool = toolRepository.findById(id).orElseThrow(() -> new NotFoundException("Tool not found"));
         Tool updatedTool = ToolMapper.toEntity(toolDto);
         updatedTool.setId(existingTool.getId());
         return ToolMapper.toResponse(toolRepository.save(updatedTool));
@@ -47,6 +48,7 @@ public class ToolServiceImpl implements ToolService {
 
     @Override
     public void delete(Long id) {
+        var tool = toolRepository.findById(id).orElseThrow(() -> new NotFoundException("Tool not found"));
         toolRepository.deleteById(id);
     }
 }

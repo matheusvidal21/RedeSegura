@@ -1,0 +1,43 @@
+### Get All Users
+GET http://localhost:8080/rede-segura/users
+Accept: application/json
+
+###
+
+### Get User by ID
+GET http://localhost:8080/rede-segura/users/2
+Accept: application/json
+
+###
+
+### Create a New User
+POST http://localhost:8080/rede-segura/users
+Content-Type: application/json
+
+{
+  "name": "Ana Pereira",
+  "email": "ana.pereira@ufrn.br",
+  "password": "senha123",
+  "institutionId": 1,
+  "rolesIds": [2]
+}
+
+###
+
+### Update an Existing User
+PUT http://localhost:8080/rede-segura/users/1
+Content-Type: application/json
+
+{
+  "name": "Ana Pereira Updated",
+  "email": "ana.pereira@ufn.br",
+  "password": "senha456",
+  "institutionId": 1,
+  "rolesIds": [1, 4]
+}
+
+###
+
+### Delete a User
+DELETE http://localhost:8080/rede-segura/users/1
+Accept: application/json
