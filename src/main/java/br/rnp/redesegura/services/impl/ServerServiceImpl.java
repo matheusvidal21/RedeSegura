@@ -4,16 +4,19 @@ import br.rnp.redesegura.dto.ServerDto;
 import br.rnp.redesegura.dto.response.ServerResponse;
 import br.rnp.redesegura.exception.NotFoundException;
 import br.rnp.redesegura.mapper.ServerMapper;
+import br.rnp.redesegura.mapper.ServiceMapper;
 import br.rnp.redesegura.models.Institution;
 import br.rnp.redesegura.models.Server;
 import br.rnp.redesegura.models.User;
 import br.rnp.redesegura.repositories.InstitutionRepository;
 import br.rnp.redesegura.repositories.ServerRepository;
+import br.rnp.redesegura.repositories.ServiceRepository;
 import br.rnp.redesegura.repositories.UserRepository;
 import br.rnp.redesegura.services.ServerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,12 +32,16 @@ public class ServerServiceImpl implements ServerService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private ServiceRepository serviceRepository;
+
     @Override
     public List<ServerResponse> findAll() {
         return serverRepository.findAll().stream()
                 .map(ServerMapper::toResponse)
                 .collect(Collectors.toList());
     }
+
 
     @Override
     public ServerResponse findById(Long id) {

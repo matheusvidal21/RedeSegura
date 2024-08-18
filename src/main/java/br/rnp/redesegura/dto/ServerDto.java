@@ -19,7 +19,6 @@ public class ServerDto {
     @NotNull(message = "Version is required")
     private Long institutionId;
 
-    @NotNull(message = "Version is required")
     private Long responsibleId;
 
 }

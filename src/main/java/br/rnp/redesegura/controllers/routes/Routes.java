@@ -4,8 +4,6 @@ public interface Routes {
 
     String API = "/api";
 
-    String USERS = API + "/users";
-
     String VULNERABILITIES = API + "/vulnerabilities";
 
     String INSTITUTIONS = API + "/institutions";
@@ -20,16 +18,6 @@ public interface Routes {
 
     // View
 
-    String INSTITUTIONS_VIEW = "/institutions";
-
-    String SERVERS_VIEW = "/servers";
-
-    String SERVICES_VIEW = "/services";
-
-    String VULNERABILITIES_VIEW = "/vulnerabilities";
-
     String VULNERABILITY_TEST_VIEW = "/vulnerability-test";
-
-
 
 }
