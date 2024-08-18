@@ -8,6 +8,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.SpiderWebPlot;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -66,21 +67,22 @@ public class ChartGenerator {
         ChartUtils.saveChartAsPNG(new File(filePath), barChart, 800, 600);
     }
 
-    public void generateServerHealthRadarChart(String filePath, Long institutionId) throws IOException {
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+    public void generateServerHealthPieChart(String filePath, Long institutionId) throws IOException {
+        DefaultPieDataset pieDataset = new DefaultPieDataset();
 
         int operationalCount = dashboardService.countOperationalServers(institutionId);
         int partiallyOperationalCount = dashboardService.countPartiallyOperationalServers(institutionId);
         int degradedCount = dashboardService.countDegradedServers(institutionId);
 
-        dataset.addValue(operationalCount, "Operacional", "Servidores");
-        dataset.addValue(partiallyOperationalCount, "Parcialmente Operacional", "Servidores");
-        dataset.addValue(degradedCount, "Degradado", "Servidores");
+        pieDataset.setValue("Operacional", Math.max(operationalCount, 1));
+        pieDataset.setValue("Parcialmente Operacional", Math.max(partiallyOperationalCount, 1));
+        pieDataset.setValue("Degradado", Math.max(degradedCount, 1));
 
-        SpiderWebPlot plot = new SpiderWebPlot(dataset);
-        JFreeChart radarChart = new JFreeChart("Comparação de Saúde dos Servidores", JFreeChart.DEFAULT_TITLE_FONT, plot, false);
+        JFreeChart pieChart = ChartFactory.createPieChart(
+                "Comparação de Saúde dos Servidores",
+                pieDataset,
+                true, true, false);
 
-        ChartUtils.saveChartAsPNG(new File(filePath), radarChart, 800, 600);
+        ChartUtils.saveChartAsPNG(new File(filePath), pieChart, 800, 600);
     }
-
 }

@@ -142,7 +142,7 @@
                 document.add(barChartImage);
 
                 String radarChartPath = reportDirectory + "server_health_radar_chart.png";
-                chartGenerator.generateServerHealthRadarChart(radarChartPath, institutionId);
+                chartGenerator.generateServerHealthPieChart(radarChartPath, institutionId);
                 Image radarChartImage = Image.getInstance(radarChartPath);
                 radarChartImage.setAlignment(Element.ALIGN_CENTER);
                 radarChartImage.scaleToFit(500, 300);
@@ -169,7 +169,56 @@
                     importance = MessageList.getMessage(MessageList.Message.NTP_DDOS_AMPLIFICATION_IMPORTANCE);
                     solution = MessageList.getMessage(MessageList.Message.NTP_DDOS_AMPLIFICATION_SOLUTION);
                     break;
+                case NETBIOS_EXPOSURE:
+                    reason = MessageList.getMessage(MessageList.Message.NETBIOS_EXPOSURE_REASON);
+                    importance = MessageList.getMessage(MessageList.Message.NETBIOS_EXPOSURE_IMPORTANCE);
+                    solution = MessageList.getMessage(MessageList.Message.NETBIOS_EXPOSURE_SOLUTION);
+                    break;
+                case SNMP_PUBLIC_COMMUNITY:
+                    reason = MessageList.getMessage(MessageList.Message.SNMP_PUBLIC_COMMUNITY_REASON);
+                    importance = MessageList.getMessage(MessageList.Message.SNMP_PUBLIC_COMMUNITY_IMPORTANCE);
+                    solution = MessageList.getMessage(MessageList.Message.SNMP_PUBLIC_COMMUNITY_SOLUTION);
+                    break;
+                case SAMBA_OUTDATED_VERSION:
+                    reason = MessageList.getMessage(MessageList.Message.SAMBA_OUTDATED_VERSION_REASON);
+                    importance = MessageList.getMessage(MessageList.Message.SAMBA_OUTDATED_VERSION_IMPORTANCE);
+                    solution = MessageList.getMessage(MessageList.Message.SAMBA_OUTDATED_VERSION_SOLUTION);
+                    break;
+                case EXPOSED_MYSQL:
+                    reason = MessageList.getMessage(MessageList.Message.EXPOSED_MYSQL_REASON);
+                    importance = MessageList.getMessage(MessageList.Message.EXPOSED_MYSQL_IMPORTANCE);
+                    solution = MessageList.getMessage(MessageList.Message.EXPOSED_MYSQL_SOLUTION);
+                    break;
+                case REDIS_NO_AUTHENTICATION:
+                    reason = MessageList.getMessage(MessageList.Message.REDIS_NO_AUTHENTICATION_REASON);
+                    importance = MessageList.getMessage(MessageList.Message.REDIS_NO_AUTHENTICATION_IMPORTANCE);
+                    solution = MessageList.getMessage(MessageList.Message.REDIS_NO_AUTHENTICATION_SOLUTION);
+                    break;
+                case EXPOSED_SSDP:
+                    reason = MessageList.getMessage(MessageList.Message.EXPOSED_SSDP_REASON);
+                    importance = MessageList.getMessage(MessageList.Message.EXPOSED_SSDP_IMPORTANCE);
+                    solution = MessageList.getMessage(MessageList.Message.EXPOSED_SSDP_SOLUTION);
+                    break;
+                case EXPOSED_MEMCACHED:
+                    reason = MessageList.getMessage(MessageList.Message.EXPOSED_MEMCACHED_REASON);
+                    importance = MessageList.getMessage(MessageList.Message.EXPOSED_MEMCACHED_IMPORTANCE);
+                    solution = MessageList.getMessage(MessageList.Message.EXPOSED_MEMCACHED_SOLUTION);
+                    break;
+                case EXPOSED_SLP:
+                    reason = MessageList.getMessage(MessageList.Message.EXPOSED_SLP_REASON);
+                    importance = MessageList.getMessage(MessageList.Message.EXPOSED_SLP_IMPORTANCE);
+                    solution = MessageList.getMessage(MessageList.Message.EXPOSED_SLP_SOLUTION);
+                    break;
             }
+
+            Paragraph aboutParagraph = new Paragraph();
+            aboutParagraph.add(new Chunk("Sobre a vulnerabilidade", boldFont));
+            aboutParagraph.add(new Chunk(reason, font));
+            aboutParagraph.setAlignment(Element.ALIGN_CENTER);
+            aboutParagraph.setSpacingBefore(20);
+            aboutParagraph.setSpacingAfter(20);
+            aboutParagraph.setLeading(20f);
+            document.add(aboutParagraph);
 
             Paragraph reasonParagraph = new Paragraph();
             reasonParagraph.add(new Chunk("Motivo: ", boldFont));
