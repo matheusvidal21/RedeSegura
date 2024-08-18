@@ -3,6 +3,7 @@ package br.rnp.redesegura.exception.handler;
 import br.rnp.redesegura.dto.response.ErrorResponse;
 import br.rnp.redesegura.dto.response.ValidationErrorResponse;
 import br.rnp.redesegura.exception.BadRequestException;
+import br.rnp.redesegura.exception.FailedTestException;
 import br.rnp.redesegura.exception.NotFoundException;
 import br.rnp.redesegura.models.ValidationError;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,12 @@ public class ExceptionHandler {
     public ResponseEntity<ErrorResponse> handleBadRequestException(BadRequestException ex) {
         ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST, ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(FailedTestException.class)
+    public ResponseEntity<ErrorResponse> handleFailedTestException(FailedTestException ex) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(MethodArgumentNotValidException.class)

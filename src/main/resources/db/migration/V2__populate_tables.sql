@@ -147,16 +147,32 @@ VALUES
 -- Vulnerabilidades no Sistema Vulnerável
 INSERT INTO vulnerabilities (title, severity, status, system_id, service_id, type_id)
 VALUES
-    ('Recursive DNS Query Exploitation', 'HIGH', 'OPEN', 1, (SELECT id FROM services WHERE name = 'DNS Service' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'DNS Recursion' LIMIT 1)),
-    ('NTP Reflection Attack', 'HIGH', 'OPEN', 1, (SELECT id FROM services WHERE name = 'NTP Service' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'NTP DDOS Amplification' LIMIT 1)),
-    ('NetBIOS Information Disclosure', 'MEDIUM', 'OPEN', 1, (SELECT id FROM services WHERE name = 'NetBIOS Service' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'NetBIOS Exposure' LIMIT 1)),
-    ('Public SNMP Community String Exposure', 'MEDIUM', 'OPEN', 1, (SELECT id FROM services WHERE name = 'SNMP Service' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'SNMP Public Community' LIMIT 1)),
-    ('Outdated Samba Null Session Exploit', 'HIGH', 'OPEN', 1, (SELECT id FROM services WHERE name = 'SMB Service' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Samba Outdated Version' LIMIT 1)),
-    ('Exposed MySQL Authentication Bypass', 'HIGH', 'OPEN', 1, (SELECT id FROM services WHERE name = 'MySQL Service' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Exposed MySQL' LIMIT 1)),
-    ('Unauthenticated Redis Access', 'HIGH', 'OPEN', 1, (SELECT id FROM services WHERE name = 'Redis Service' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Redis No Authentication' LIMIT 1)),
-    ('SSDP Service Exposure', 'MEDIUM', 'OPEN', 1, (SELECT id FROM services WHERE name = 'SSDP Service' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Exposed SSDP' LIMIT 1)),
-    ('Memcached Internet Exposure', 'HIGH', 'OPEN', 1, (SELECT id FROM services WHERE name = 'Memcached Service' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Exposed Memcached' LIMIT 1)),
-    ('SLP Service Exposure', 'MEDIUM', 'OPEN', 1, (SELECT id FROM services WHERE name = 'SLP Service' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Exposed SLP' LIMIT 1));
+    ('Recursive DNS Query Exploitation - AMBIENTE VULNERÁVEL', 'HIGH', 'OPEN', 3, (SELECT id FROM services WHERE name = 'DNS Service' AND ip = '200.130.38.131' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'DNS Recursion' LIMIT 1)),
+    ('NTP Reflection Attack - AMBIENTE VULNERÁVEL', 'HIGH', 'OPEN', 3, (SELECT id FROM services WHERE name = 'NTP Service' AND ip = '200.130.38.131' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'NTP DDOS Amplification' LIMIT 1)),
+    ('NetBIOS Information Disclosure - AMBIENTE VULNERÁVEL', 'MEDIUM', 'OPEN', 3, (SELECT id FROM services WHERE name = 'NetBIOS Service' AND ip = '200.130.38.131' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'NetBIOS Exposure' LIMIT 1)),
+    ('Public SNMP Community String Exposure - AMBIENTE VULNERÁVEL', 'MEDIUM', 'OPEN', 3, (SELECT id FROM services WHERE name = 'SNMP Service' AND ip = '200.130.38.131' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'SNMP Public Community' LIMIT 1)),
+    ('Outdated Samba Null Session Exploit - AMBIENTE VULNERÁVEL', 'HIGH', 'OPEN', 3, (SELECT id FROM services WHERE name = 'SMB Service' AND ip = '200.130.38.131' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Samba Outdated Version' LIMIT 1)),
+    ('Exposed MySQL Authentication Bypass - AMBIENTE VULNERÁVEL', 'HIGH', 'OPEN', 3, (SELECT id FROM services WHERE name = 'MySQL Service' AND ip = '200.130.38.131' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Exposed MySQL' LIMIT 1)),
+    ('Unauthenticated Redis Access - AMBIENTE VULNERÁVEL', 'HIGH', 'OPEN', 3, (SELECT id FROM services WHERE name = 'Redis Service' AND ip = '200.130.38.131' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Redis No Authentication' LIMIT 1)),
+    ('SSDP Service Exposure - AMBIENTE VULNERÁVEL', 'MEDIUM', 'OPEN', 3, (SELECT id FROM services WHERE name = 'SSDP Service' AND ip = '200.130.38.131' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Exposed SSDP' LIMIT 1)),
+    ('Memcached Internet Exposure - AMBIENTE VULNERÁVEL', 'HIGH', 'OPEN', 3, (SELECT id FROM services WHERE name = 'Memcached Service' AND ip = '200.130.38.131' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Exposed Memcached' LIMIT 1)),
+    ('SLP Service Exposure - AMBIENTE VULNERÁVEL', 'MEDIUM', 'OPEN', 3, (SELECT id FROM services WHERE name = 'SLP Service' AND ip = '200.130.38.131' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Exposed SLP' LIMIT 1));
+
+-- Vulnerabilidades no Sistema Estável
+INSERT INTO vulnerabilities (title, severity, status, system_id, service_id, type_id)
+VALUES
+    ('Stable Recursive DNS Query - AMBIENTE ESTÁVEL', 'LOW', 'OPEN', 4, (SELECT id FROM services WHERE name = 'DNS Service' AND ip = '200.130.38.130' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'DNS Recursion' LIMIT 1)),
+    ('Stable NTP Reflection Test - AMBIENTE ESTÁVEL', 'LOW', 'RESOLVED', 4, (SELECT id FROM services WHERE name = 'NTP Service' AND ip = '200.130.38.130' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'NTP DDOS Amplification' LIMIT 1)),
+    ('Stable NetBIOS Information Disclosure - AMBIENTE ESTÁVEL', 'MEDIUM', 'OPEN', 4, (SELECT id FROM services WHERE name = 'NetBIOS Service' AND ip = '200.130.38.130' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'NetBIOS Exposure' LIMIT 1)),
+    ('Stable SNMP Community String Exposure - AMBIENTE ESTÁVEL', 'MEDIUM', 'RESOLVED', 4, (SELECT id FROM services WHERE name = 'SNMP Service' AND ip = '200.130.38.130' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'SNMP Public Community' LIMIT 1)),
+    ('Stable Samba Null Session Exploit - AMBIENTE ESTÁVEL', 'HIGH', 'OPEN', 4, (SELECT id FROM services WHERE name = 'SMB Service' AND ip = '200.130.38.130' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Samba Outdated Version' LIMIT 1)),
+    ('Stable MySQL Authentication Bypass - AMBIENTE ESTÁVEL', 'HIGH', 'RESOLVED', 4, (SELECT id FROM services WHERE name = 'MySQL Service' AND ip = '200.130.38.130' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Exposed MySQL' LIMIT 1)),
+    ('Stable Redis Unauthenticated Access - AMBIENTE ESTÁVEL', 'HIGH', 'OPEN', 4, (SELECT id FROM services WHERE name = 'Redis Service' AND ip = '200.130.38.130' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Redis No Authentication' LIMIT 1)),
+    ('Stable SSDP Service Exposure - AMBIENTE ESTÁVEL', 'MEDIUM', 'RESOLVED', 4, (SELECT id FROM services WHERE name = 'SSDP Service' AND ip = '200.130.38.130' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Exposed SSDP' LIMIT 1)),
+    ('Stable Memcached Internet Exposure - AMBIENTE ESTÁVEL', 'HIGH', 'OPEN', 4, (SELECT id FROM services WHERE name = 'Memcached Service' AND ip = '200.130.38.130' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Exposed Memcached' LIMIT 1)),
+    ('Stable SLP Service Exposure - AMBIENTE ESTÁVEL', 'MEDIUM', 'RESOLVED', 4, (SELECT id FROM services WHERE name = 'SLP Service' AND ip = '200.130.38.130' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Exposed SLP' LIMIT 1));
+
+
 
 -- Insert action logs
 INSERT INTO action_log (vulnerability_id, action, performed_by)

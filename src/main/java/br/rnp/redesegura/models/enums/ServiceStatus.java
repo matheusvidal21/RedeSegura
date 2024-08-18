@@ -6,6 +6,7 @@ public enum ServiceStatus {
 
     UP("Up"),
     DOWN("Down"),
+    HEALTHY("Healthy"),
     DEGRADED("Degraded"),
     UNKNOWN("Unknown");
 

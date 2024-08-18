@@ -2,7 +2,7 @@
 GET http://localhost:8080/rede-segura/services
 
 ### Get Service by ID
-GET http://localhost:8080/rede-segura/services/21
+GET http://localhost:8080/rede-segura/services/1
 
 ### Create a New Service
 POST http://localhost:8080/rede-segura/services

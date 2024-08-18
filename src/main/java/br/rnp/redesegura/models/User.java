@@ -11,9 +11,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -56,14 +54,14 @@ public class User {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public enum Values {
+    public enum RoleEnum {
         ADMIN(1L),
         USER(1L),
         SUPPORT(1L);
 
         long roleId;
 
-        Values(long roleId) {
+        RoleEnum(long roleId) {
             this.roleId = roleId;
         }
 
@@ -71,8 +69,8 @@ public class User {
             return roleId;
         }
 
-        public Values getRoleById(long roleId) {
-            for (Values value : Values.values()) {
+        public RoleEnum getRoleById(long roleId) {
+            for (RoleEnum value : RoleEnum.values()) {
                 if (value.getRoleId() == roleId) {
                     return value;
                 }
@@ -83,7 +81,7 @@ public class User {
     }
 
     public boolean isAdmin() {
-        return this.roles.stream().anyMatch(role -> role.getId().equals(Values.ADMIN.getRoleId()));
+        return this.roles.stream().anyMatch(role -> role.getId().equals(RoleEnum.ADMIN.getRoleId()));
     }
 
 }

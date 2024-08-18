@@ -20,4 +20,6 @@ public interface Routes {
 
     String SERVICES = "/services";
 
+    String VULNERABILITY_TEST = "/vulnerability-test";
+
 }
