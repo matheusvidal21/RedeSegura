@@ -4,7 +4,7 @@ import br.rnp.redesegura.dto.ServiceDto;
 import br.rnp.redesegura.dto.response.ServiceResponse;
 import br.rnp.redesegura.models.Protocol;
 import br.rnp.redesegura.models.Service;
-import br.rnp.redesegura.models.System;
+import br.rnp.redesegura.models.Server;
 import br.rnp.redesegura.models.enums.ServiceStatus;
 
 import java.util.Set;
@@ -23,18 +23,18 @@ public class ServiceMapper {
                 .port(service.getPort())
                 .status(service.getStatus().getValue())
                 .protocol(service.getProtocols().stream().map(Protocol::getName).collect(Collectors.toSet()))
-                .systemName(service.getSystem().getName())
+                .serverName(service.getServer().getName())
                 .build();
     }
 
-    public static Service toEntity(ServiceDto serviceDto, System system, Set<Protocol> protocols) {
+    public static Service toEntity(ServiceDto serviceDto, Server server, Set<Protocol> protocols) {
         return Service.builder()
                 .name(serviceDto.getName())
                 .ip(serviceDto.getIp())
                 .port(serviceDto.getPort())
                 .status(ServiceStatus.UNKNOWN)
                 .protocols(protocols)
-                .system(system)
+                .server(server)
                 .build();
     }
 

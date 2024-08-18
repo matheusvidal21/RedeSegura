@@ -27,6 +27,6 @@ public class ServiceResponse {
 
     private String status;
 
-    private String systemName;
+    private String serverName;
 
 }

@@ -49,8 +49,8 @@ CREATE TABLE IF NOT EXISTS users_roles (
                                            FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
 );
 
--- Create systems table
-CREATE TABLE IF NOT EXISTS systems (
+-- Create servers table
+CREATE TABLE IF NOT EXISTS servers (
                                        id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                        name VARCHAR(255) NOT NULL,
                                        description TEXT,
@@ -76,10 +76,10 @@ CREATE TABLE IF NOT EXISTS services (
                                         ip VARCHAR(45) NOT NULL,
                                         port INT NOT NULL,
                                         status VARCHAR(50) DEFAULT 'UNKNOWN',
-                                        system_id BIGINT,
+                                        server_id BIGINT,
                                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                                        FOREIGN KEY (system_id) REFERENCES systems(id) ON DELETE CASCADE
+                                        FOREIGN KEY (server_id) REFERENCES servers(id) ON DELETE CASCADE
 );
 
 -- Create service_protocols table
@@ -98,19 +98,18 @@ CREATE TABLE IF NOT EXISTS vulnerability_types (
                                                    description TEXT
 );
 
-
 -- Create vulnerabilities table
 CREATE TABLE IF NOT EXISTS vulnerabilities (
                                                id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                                title VARCHAR(255) NOT NULL,
                                                severity VARCHAR(50),
                                                status VARCHAR(50),
-                                               system_id BIGINT,
+                                               server_id BIGINT,
                                                service_id BIGINT NOT NULL,
                                                type_id BIGINT NOT NULL,
                                                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                                resolved_at TIMESTAMP,
-                                               FOREIGN KEY (system_id) REFERENCES systems(id) ON DELETE CASCADE,
+                                               FOREIGN KEY (server_id) REFERENCES servers(id) ON DELETE CASCADE,
                                                FOREIGN KEY (type_id) REFERENCES vulnerability_types(id) ON DELETE CASCADE,
                                                FOREIGN KEY (service_id) REFERENCES services(id) ON DELETE CASCADE
 );

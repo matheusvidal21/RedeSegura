@@ -13,7 +13,7 @@ Content-Type: application/json
   "ip": "192.168.0.1",
   "port": 8080,
   "protocols": ["UDP"],
-  "systemId": 1,
+  "serverId": 1,
   "serviceHealth": "OPERATIONAL"
 }
 
@@ -26,7 +26,7 @@ Content-Type: application/json
   "ip": "192.168.0.2",
   "port": 8081,
   "protocols": ["UDP"],
-  "systemId": 1,
+  "serverId": 1,
   "serviceHealth": "WARNING"
 }
 

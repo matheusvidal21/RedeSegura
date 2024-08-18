@@ -28,8 +28,8 @@ public class ServiceDto {
     @NotNull(message = "Protocols are required")
     private Set<String> protocols;
 
-    @NotNull(message = "System ID is required")
-    private Long systemId;
+    @NotNull(message = "Server ID is required")
+    private Long serverId;
 
 
 }

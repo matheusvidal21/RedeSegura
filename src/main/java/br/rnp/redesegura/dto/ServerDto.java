@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SystemDto {
+public class ServerDto {
 
     @NotBlank(message = "Name is required")
     private String name;

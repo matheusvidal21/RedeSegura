@@ -10,9 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -45,8 +43,8 @@ public class Service {
     private ServiceStatus status;
 
     @ManyToOne
-    @JoinColumn(name = "system_id")
-    private System system;
+    @JoinColumn(name = "server_id")
+    private Server server;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

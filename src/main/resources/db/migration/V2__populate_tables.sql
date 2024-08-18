@@ -34,13 +34,13 @@ VALUES
     (2, 2), -- Maria de Souza é USER
     (2, 3); -- Maria de Souza é SUPPORT
 
--- Insert systems
-INSERT INTO systems (name, description, institution_id, responsible_id, health)
+-- Insert servers
+INSERT INTO servers (name, description, institution_id, responsible_id, health)
 VALUES
-    ('Sistema de Gestão Acadêmica', 'Sistema que gerencia as atividades acadêmicas da UFRN', 1, 1, 'OPERATIONAL'), -- Sistema UFRN
-    ('Sistema de Biblioteca', 'Sistema de gerenciamento das bibliotecas da UFC', 2, 2, 'PARTIALLY_OPERATIONAL'),   -- Sistema UFC
-    ('Sistema Vulnerável', 'Sistema com vulnerabilidades conhecidas para testes', 1, 1, 'DEGRADED'),               -- Sistema Vulnerável
-    ('Sistema Estável', 'Sistema estável e seguro', 2, 2, 'OPERATIONAL');                                          -- Sistema Estável
+    ('Servidor de Gestão Acadêmica', 'Servidor que gerencia as atividades acadêmicas da UFRN', 1, 1, 'OPERATIONAL'), -- Servidor UFRN
+    ('Servidor de Biblioteca', 'Servidor de gerenciamento das bibliotecas da UFC', 2, 2, 'PARTIALLY_OPERATIONAL'),   -- Servidor UFC
+    ('Servidor Vulnerável', 'Servidor com vulnerabilidades conhecidas para testes', 1, 1, 'DEGRADED'),               -- Servidor Vulnerável
+    ('Servidor Estável', 'Servidor estável e seguro', 2, 2, 'OPERATIONAL');                                          -- Servidor Estável
 
 -- Insert protocols
 INSERT INTO protocols (name) VALUES
@@ -69,9 +69,8 @@ INSERT INTO protocols (name) VALUES
                                  ('RTSP'),           -- Real-Time Streaming Protocol
                                  ('SCTP');           -- Stream Control Transmission Protocol
 
-
--- Sistema Vulnerável
-INSERT INTO services (name, ip, port, system_id)
+-- Servidor Vulnerável
+INSERT INTO services (name, ip, port, server_id)
 VALUES
     ('DNS Service', '200.130.38.131', 53, 3),    -- DNS
     ('NTP Service', '200.130.38.131', 123, 3),   -- NTP
@@ -84,8 +83,8 @@ VALUES
     ('Memcached Service', '200.130.38.131', 11211, 3), -- Memcached
     ('SLP Service', '200.130.38.131', 427, 3); -- SLP
 
--- Sistema Estável
-INSERT INTO services (name, ip, port, system_id)
+-- Servidor Estável
+INSERT INTO services (name, ip, port, server_id)
 VALUES
     ('DNS Service', '200.130.38.130', 53, 4),    -- DNS
     ('NTP Service', '200.130.38.130', 123, 4),   -- NTP
@@ -98,7 +97,7 @@ VALUES
     ('Memcached Service', '200.130.38.130', 11211, 4), -- Memcached
     ('SLP Service', '200.130.38.130', 427, 4); -- SLP
 
--- Associando Protocolos aos Serviços no Sistema Vulnerável
+-- Associando Protocolos aos Serviços no Servidor Vulnerável
 INSERT INTO service_protocols (service_id, protocol_id)
 VALUES
     (1, (SELECT id FROM protocols WHERE name = 'UDP')),    -- DNS usa UDP
@@ -114,7 +113,7 @@ VALUES
     (10, (SELECT id FROM protocols WHERE name = 'TCP')),   -- SLP usa TCP
     (10, (SELECT id FROM protocols WHERE name = 'UDP'));   -- SLP usa UDP
 
--- Associando Protocolos aos Serviços no Sistema Estável
+-- Associando Protocolos aos Serviços no Servidor Estável
 INSERT INTO service_protocols (service_id, protocol_id)
 VALUES
     (11, (SELECT id FROM protocols WHERE name = 'UDP')),    -- DNS usa UDP
@@ -144,8 +143,8 @@ VALUES
     ('Exposed Memcached', 'Exposição do serviço Memcached, projetado para operação local, à internet, criando uma vulnerabilidade.'),
     ('Exposed SLP', 'Exposição do serviço SLP à internet, quando deveria ser utilizado apenas localmente.');
 
--- Vulnerabilidades no Sistema Vulnerável
-INSERT INTO vulnerabilities (title, severity, status, system_id, service_id, type_id)
+-- Vulnerabilidades no Servidor Vulnerável
+INSERT INTO vulnerabilities (title, severity, status, server_id, service_id, type_id)
 VALUES
     ('Recursive DNS Query Exploitation - AMBIENTE VULNERÁVEL', 'HIGH', 'OPEN', 3, (SELECT id FROM services WHERE name = 'DNS Service' AND ip = '200.130.38.131' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'DNS Recursion' LIMIT 1)),
     ('NTP Reflection Attack - AMBIENTE VULNERÁVEL', 'HIGH', 'OPEN', 3, (SELECT id FROM services WHERE name = 'NTP Service' AND ip = '200.130.38.131' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'NTP DDOS Amplification' LIMIT 1)),
@@ -158,8 +157,8 @@ VALUES
     ('Memcached Internet Exposure - AMBIENTE VULNERÁVEL', 'HIGH', 'OPEN', 3, (SELECT id FROM services WHERE name = 'Memcached Service' AND ip = '200.130.38.131' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Exposed Memcached' LIMIT 1)),
     ('SLP Service Exposure - AMBIENTE VULNERÁVEL', 'MEDIUM', 'OPEN', 3, (SELECT id FROM services WHERE name = 'SLP Service' AND ip = '200.130.38.131' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Exposed SLP' LIMIT 1));
 
--- Vulnerabilidades no Sistema Estável
-INSERT INTO vulnerabilities (title, severity, status, system_id, service_id, type_id)
+-- Vulnerabilidades no Servidor Estável
+INSERT INTO vulnerabilities (title, severity, status, server_id, service_id, type_id)
 VALUES
     ('Stable Recursive DNS Query - AMBIENTE ESTÁVEL', 'LOW', 'OPEN', 4, (SELECT id FROM services WHERE name = 'DNS Service' AND ip = '200.130.38.130' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'DNS Recursion' LIMIT 1)),
     ('Stable NTP Reflection Test - AMBIENTE ESTÁVEL', 'LOW', 'RESOLVED', 4, (SELECT id FROM services WHERE name = 'NTP Service' AND ip = '200.130.38.130' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'NTP DDOS Amplification' LIMIT 1)),
@@ -172,19 +171,17 @@ VALUES
     ('Stable Memcached Internet Exposure - AMBIENTE ESTÁVEL', 'HIGH', 'OPEN', 4, (SELECT id FROM services WHERE name = 'Memcached Service' AND ip = '200.130.38.130' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Exposed Memcached' LIMIT 1)),
     ('Stable SLP Service Exposure - AMBIENTE ESTÁVEL', 'MEDIUM', 'RESOLVED', 4, (SELECT id FROM services WHERE name = 'SLP Service' AND ip = '200.130.38.130' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Exposed SLP' LIMIT 1));
 
-
-
 -- Insert action logs
 INSERT INTO action_log (vulnerability_id, action, performed_by)
 VALUES
-    (1, 'Análise inicial da vulnerabilidade', 1), -- Ação no sistema da UFRN
-    (2, 'Correção aplicada e testada', 2);        -- Ação no sistema da UFC
+    (1, 'Análise inicial da vulnerabilidade', 1), -- Ação no Servidor da UFRN
+    (2, 'Correção aplicada e testada', 2);        -- Ação no Servidor da UFC
 
 -- Insert reports
 INSERT INTO reports (generated_by, content)
 VALUES
-    (1, 'Relatório de análise da vulnerabilidade SQL Injection no sistema de gestão acadêmica.'), -- Relatório do João da Silva (UFRN)
-    (2, 'Relatório de resolução da vulnerabilidade XSS no sistema de biblioteca.');              -- Relatório da Maria de Souza (UFC)
+    (1, 'Relatório de análise da vulnerabilidade SQL Injection no servidor de gestão acadêmica.'), -- Relatório do João da Silva (UFRN)
+    (2, 'Relatório de resolução da vulnerabilidade XSS no servidor de biblioteca.');              -- Relatório da Maria de Souza (UFC)
 
 -- Insert tools
 INSERT INTO tools (name, description, integration_details)
@@ -195,8 +192,8 @@ VALUES
 -- Insert notifications
 INSERT INTO notifications (recipient_id, message, is_read)
 VALUES
-    (1, 'Nova vulnerabilidade identificada no sistema de gestão acadêmica.', FALSE), -- Notificação para João da Silva (UFRN)
-    (2, 'Correção aplicada na vulnerabilidade XSS do sistema de biblioteca.', TRUE); -- Notificação para Maria de Souza (UFC)
+    (1, 'Nova vulnerabilidade identificada no servidor de gestão acadêmica.', FALSE), -- Notificação para João da Silva (UFRN)
+    (2, 'Correção aplicada na vulnerabilidade XSS do servidor de biblioteca.', TRUE); -- Notificação para Maria de Souza (UFC)
 
 -- Enable foreign key checks after data insertion
 SET FOREIGN_KEY_CHECKS = 1;

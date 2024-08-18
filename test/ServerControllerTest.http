@@ -1,0 +1,40 @@
+### Get All Servers
+GET http://localhost:8080/rede-segura/servers
+Accept: application/json
+
+###
+
+### Get Server by ID
+GET http://localhost:8080/rede-segura/servers/3
+Accept: application/json
+
+###
+
+### Create Server
+POST http://localhost:8080/rede-segura/servers
+Content-Type: application/json
+
+{
+  "name": "Server 1",
+  "description": "Server Description",
+  "institutionId": 1,
+  "responsibleId": 1
+}
+
+###
+
+### Update Server
+PUT http://localhost:8080/rede-segura/servers/3
+Content-Type: application/json
+
+{
+  "name": "Updated Server",
+  "description": "Updated Description",
+  "institutionId": 1,
+  "responsibleId": 1
+}
+
+###
+
+### Delete Server
+DELETE http://localhost:8080/rede-segura/servers/5

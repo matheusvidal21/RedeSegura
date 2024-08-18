@@ -2,7 +2,7 @@ package br.rnp.redesegura.models.enums;
 
 import java.util.Arrays;
 
-public enum SystemHealth {
+public enum ServerHealth {
 
     OPERATIONAL("Operational"),
     PARTIALLY_OPERATIONAL("Partially Operational"),
@@ -12,7 +12,7 @@ public enum SystemHealth {
 
     private String value;
 
-    SystemHealth(String value) {
+    ServerHealth(String value) {
         this.value = value;
     }
 
@@ -20,8 +20,8 @@ public enum SystemHealth {
         return value;
     }
 
-    public static SystemHealth fromValue(String value) {
-        return Arrays.stream(SystemHealth.values())
+    public static ServerHealth fromValue(String value) {
+        return Arrays.stream(ServerHealth.values())
                 .filter(sh -> sh.getValue().equals(value))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Invalid value: " + value));

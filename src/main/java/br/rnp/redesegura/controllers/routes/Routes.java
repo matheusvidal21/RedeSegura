@@ -14,12 +14,14 @@ public interface Routes {
 
     String NOTIFICATIONS = "/notifications";
 
-    String SYSTEMS = "/systems";
+    String SERVERS = "/servers";
 
     String ACTION_LOGS = "/action-logs";
 
     String SERVICES = "/services";
 
     String VULNERABILITY_TEST = "/vulnerability-test";
+
+    String DASHBOARD = "/dashboard";
 
 }

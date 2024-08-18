@@ -1,6 +1,6 @@
 package br.rnp.redesegura.models;
 
-import br.rnp.redesegura.models.enums.SystemHealth;
+import br.rnp.redesegura.models.enums.ServerHealth;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,15 +10,14 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "systems")
-public class System {
+@Table(name = "servers")
+public class Server {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +30,7 @@ public class System {
     private Institution institution;
 
     @Enumerated(EnumType.STRING)
-    private SystemHealth health;
+    private ServerHealth health;
 
     @ManyToOne
     @JoinColumn(name = "responsible_id")

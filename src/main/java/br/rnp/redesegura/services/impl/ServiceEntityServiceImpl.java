@@ -6,10 +6,10 @@ import br.rnp.redesegura.exception.NotFoundException;
 import br.rnp.redesegura.mapper.ServiceMapper;
 import br.rnp.redesegura.models.Protocol;
 import br.rnp.redesegura.models.Service;
-import br.rnp.redesegura.models.System;
+import br.rnp.redesegura.models.Server;
 import br.rnp.redesegura.repositories.ProtocolRepository;
 import br.rnp.redesegura.repositories.ServiceRepository;
-import br.rnp.redesegura.repositories.SystemRepository;
+import br.rnp.redesegura.repositories.ServerRepository;
 import br.rnp.redesegura.services.ServiceEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,7 +24,7 @@ public class ServiceEntityServiceImpl implements ServiceEntityService {
     private ServiceRepository serviceRepository;
 
     @Autowired
-    private SystemRepository systemRepository;
+    private ServerRepository serverRepository;
 
     @Autowired
     private ProtocolRepository protocolRepository;
@@ -45,13 +45,13 @@ public class ServiceEntityServiceImpl implements ServiceEntityService {
 
     @Override
     public ServiceResponse create(ServiceDto serviceDto) {
-        System system = systemRepository.findById(serviceDto.getSystemId())
-                .orElseThrow(() -> new NotFoundException("System not found"));
+        Server server = serverRepository.findById(serviceDto.getServerId())
+                .orElseThrow(() -> new NotFoundException("Server not found"));
 
         List<Protocol> protocols = serviceDto.getProtocols().stream().map(protocol -> protocolRepository.findByName(protocol).
                 orElseThrow(() -> new NotFoundException("Protocol not found"))).collect(Collectors.toList());
 
-        Service service = ServiceMapper.toEntity(serviceDto, system, new HashSet<>(protocols));
+        Service service = ServiceMapper.toEntity(serviceDto, server, new HashSet<>(protocols));
         return ServiceMapper.toResponse(serviceRepository.save(service));
     }
 
@@ -67,8 +67,8 @@ public class ServiceEntityServiceImpl implements ServiceEntityService {
         Service service = serviceRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Service not found"));
 
-        System system = systemRepository.findById(serviceDto.getSystemId())
-                .orElseThrow(() -> new NotFoundException("System not found"));
+        Server server = serverRepository.findById(serviceDto.getServerId())
+                .orElseThrow(() -> new NotFoundException("Server not found"));
 
         List<Protocol> protocols = serviceDto.getProtocols().stream().map(protocol -> protocolRepository.findByName(protocol).
                 orElseThrow(() -> new NotFoundException("Protocol not found"))).collect(Collectors.toList());
@@ -78,7 +78,7 @@ public class ServiceEntityServiceImpl implements ServiceEntityService {
         service.setIp(serviceDto.getIp());
         service.setPort(serviceDto.getPort());
         service.setStatus(service.getStatus());
-        service.setSystem(system);
+        service.setServer(server);
 
         return ServiceMapper.toResponse(serviceRepository.save(service));
     }
