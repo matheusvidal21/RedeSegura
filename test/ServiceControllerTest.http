@@ -1,0 +1,34 @@
+### Get All Services
+GET http://localhost:8080/rede-segura/services
+
+### Get Service by ID
+GET http://localhost:8080/rede-segura/services/21
+
+### Create a New Service
+POST http://localhost:8080/rede-segura/services
+Content-Type: application/json
+
+{
+  "name": "Service Name",
+  "ip": "192.168.0.1",
+  "port": 8080,
+  "protocols": ["UDP"],
+  "systemId": 1,
+  "serviceHealth": "OPERATIONAL"
+}
+
+### Update a Service
+PUT http://localhost:8080/rede-segura/services/21
+Content-Type: application/json
+
+{
+  "name": "Updated Service Name",
+  "ip": "192.168.0.2",
+  "port": 8081,
+  "protocols": ["UDP"],
+  "systemId": 1,
+  "serviceHealth": "WARNING"
+}
+
+### Delete a Service
+DELETE http://localhost:8080/rede-segura/services/21

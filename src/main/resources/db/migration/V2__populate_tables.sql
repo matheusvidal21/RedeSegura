@@ -35,10 +35,115 @@ VALUES
     (2, 3); -- Maria de Souza é SUPPORT
 
 -- Insert systems
-INSERT INTO systems (name, description, institution_id, responsible_id)
+INSERT INTO systems (name, description, institution_id, responsible_id, health)
 VALUES
-    ('Sistema de Gestão Acadêmica', 'Sistema que gerencia as atividades acadêmicas da UFRN', 1, 1), -- Sistema UFRN
-    ('Sistema de Biblioteca', 'Sistema de gerenciamento das bibliotecas da UFC', 2, 2);             -- Sistema UFC
+    ('Sistema de Gestão Acadêmica', 'Sistema que gerencia as atividades acadêmicas da UFRN', 1, 1, 'OPERATIONAL'), -- Sistema UFRN
+    ('Sistema de Biblioteca', 'Sistema de gerenciamento das bibliotecas da UFC', 2, 2, 'PARTIALLY_OPERATIONAL'),   -- Sistema UFC
+    ('Sistema Vulnerável', 'Sistema com vulnerabilidades conhecidas para testes', 1, 1, 'DEGRADED'),               -- Sistema Vulnerável
+    ('Sistema Estável', 'Sistema estável e seguro', 2, 2, 'OPERATIONAL');                                          -- Sistema Estável
+
+-- Insert protocols
+INSERT INTO protocols (name) VALUES
+                                 ('HTTP'),           -- HyperText Transfer Protocol
+                                 ('HTTPS'),          -- HTTP Secure
+                                 ('FTP'),            -- File Transfer Protocol
+                                 ('SFTP'),           -- Secure File Transfer Protocol
+                                 ('SSH'),            -- Secure Shell
+                                 ('SMTP'),           -- Simple Mail Transfer Protocol
+                                 ('IMAP'),           -- Internet Message Access Protocol
+                                 ('POP3'),           -- Post Office Protocol 3
+                                 ('DNS'),            -- Domain Name System
+                                 ('TCP'),            -- Transmission Control Protocol
+                                 ('UDP'),            -- User Datagram Protocol
+                                 ('RDP'),            -- Remote Desktop Protocol
+                                 ('SMB'),            -- Server Message Block
+                                 ('NFS'),            -- Network File System
+                                 ('SNMP'),           -- Simple Network Management Protocol
+                                 ('LDAP'),           -- Lightweight Directory Access Protocol
+                                 ('MQTT'),           -- Message Queuing Telemetry Transport
+                                 ('AMQP'),           -- Advanced Message Queuing Protocol
+                                 ('COAP'),           -- Constrained Application Protocol
+                                 ('ICMP'),           -- Internet Control Message Protocol
+                                 ('TELNET'),         -- Teletype Network Protocol
+                                 ('TFTP'),           -- Trivial File Transfer Protocol
+                                 ('RTSP'),           -- Real-Time Streaming Protocol
+                                 ('SCTP');           -- Stream Control Transmission Protocol
+
+
+-- Sistema Vulnerável
+INSERT INTO services (name, ip, port, system_id)
+VALUES
+    ('DNS Service', '200.130.38.131', 53, 3),    -- DNS
+    ('NTP Service', '200.130.38.131', 123, 3),   -- NTP
+    ('NetBIOS Service', '200.130.38.131', 137, 3), -- NetBIOS
+    ('SNMP Service', '200.130.38.131', 161, 3),  -- SNMP
+    ('SMB Service', '200.130.38.131', 445, 3),   -- SMB
+    ('MySQL Service', '200.130.38.131', 3306, 3), -- MySQL
+    ('Redis Service', '200.130.38.131', 6379, 3), -- Redis
+    ('SSDP Service', '200.130.38.131', 1900, 3), -- SSDP
+    ('Memcached Service', '200.130.38.131', 11211, 3), -- Memcached
+    ('SLP Service', '200.130.38.131', 427, 3); -- SLP
+
+-- Sistema Estável
+INSERT INTO services (name, ip, port, system_id)
+VALUES
+    ('DNS Service', '200.130.38.130', 53, 4),    -- DNS
+    ('NTP Service', '200.130.38.130', 123, 4),   -- NTP
+    ('NetBIOS Service', '200.130.38.130', 137, 4), -- NetBIOS
+    ('SNMP Service', '200.130.38.130', 161, 4),  -- SNMP
+    ('SMB Service', '200.130.38.130', 445, 4),   -- SMB
+    ('MySQL Service', '200.130.38.130', 3306, 4), -- MySQL
+    ('Redis Service', '200.130.38.130', 6379, 4), -- Redis
+    ('SSDP Service', '200.130.38.130', 1900, 4), -- SSDP
+    ('Memcached Service', '200.130.38.130', 11211, 4), -- Memcached
+    ('SLP Service', '200.130.38.130', 427, 4); -- SLP
+
+-- Associando Protocolos aos Serviços no Sistema Vulnerável
+INSERT INTO service_protocols (service_id, protocol_id)
+VALUES
+    (1, (SELECT id FROM protocols WHERE name = 'UDP')),    -- DNS usa UDP
+    (2, (SELECT id FROM protocols WHERE name = 'UDP')),    -- NTP usa UDP
+    (3, (SELECT id FROM protocols WHERE name = 'UDP')),    -- NetBIOS usa UDP
+    (4, (SELECT id FROM protocols WHERE name = 'UDP')),    -- SNMP usa UDP
+    (5, (SELECT id FROM protocols WHERE name = 'TCP')),    -- SMB usa TCP
+    (6, (SELECT id FROM protocols WHERE name = 'TCP')),    -- MySQL usa TCP
+    (7, (SELECT id FROM protocols WHERE name = 'TCP')),    -- Redis usa TCP
+    (8, (SELECT id FROM protocols WHERE name = 'UDP')),    -- SSDP usa UDP
+    (9, (SELECT id FROM protocols WHERE name = 'TCP')),    -- Memcached usa TCP
+    (9, (SELECT id FROM protocols WHERE name = 'UDP')),    -- Memcached usa UDP
+    (10, (SELECT id FROM protocols WHERE name = 'TCP')),   -- SLP usa TCP
+    (10, (SELECT id FROM protocols WHERE name = 'UDP'));   -- SLP usa UDP
+
+-- Associando Protocolos aos Serviços no Sistema Estável
+INSERT INTO service_protocols (service_id, protocol_id)
+VALUES
+    (11, (SELECT id FROM protocols WHERE name = 'UDP')),    -- DNS usa UDP
+    (12, (SELECT id FROM protocols WHERE name = 'UDP')),    -- NTP usa UDP
+    (13, (SELECT id FROM protocols WHERE name = 'UDP')),    -- NetBIOS usa UDP
+    (14, (SELECT id FROM protocols WHERE name = 'UDP')),    -- SNMP usa UDP
+    (15, (SELECT id FROM protocols WHERE name = 'TCP')),    -- SMB usa TCP
+    (16, (SELECT id FROM protocols WHERE name = 'TCP')),    -- MySQL usa TCP
+    (17, (SELECT id FROM protocols WHERE name = 'TCP')),    -- Redis usa TCP
+    (18, (SELECT id FROM protocols WHERE name = 'UDP')),    -- SSDP usa UDP
+    (19, (SELECT id FROM protocols WHERE name = 'TCP')),    -- Memcached usa TCP
+    (19, (SELECT id FROM protocols WHERE name = 'UDP')),    -- Memcached usa UDP
+    (20, (SELECT id FROM protocols WHERE name = 'TCP')),    -- SLP usa TCP
+    (20, (SELECT id FROM protocols WHERE name = 'UDP'));    -- SLP usa UDP
+
+
+-- Vulnerabilidades no Sistema Vulnerável
+INSERT INTO vulnerabilities (title, description, severity, status, system_id)
+VALUES
+    ('DNS Recursion', 'Vulnerabilidade de DNS recursion podendo causar DDoS.', 'HIGH', 'OPEN', 3),
+    ('NTP v4', 'Vulnerabilidade de amplificação de DDoS em NTP versão 4.', 'HIGH', 'OPEN', 3),
+    ('NetBIOS Exposure', 'NetBIOS exposto permitindo consultas de informações sensíveis.', 'MEDIUM', 'OPEN', 3),
+    ('SNMP Public Community', 'Comunity "public" exposta, vulnerável a manipulação.', 'MEDIUM', 'OPEN', 3),
+    ('Samba Vulnerability', 'Versão defasada do Samba vulnerável a scanning e null session.', 'HIGH', 'OPEN', 3),
+    ('Exposed MySQL', 'MySQL exposto à internet, possibilitando conexões não autenticadas.', 'HIGH', 'OPEN', 3),
+    ('Redis Exposure', 'Redis exposto sem autenticação, vulnerável a conexões externas.', 'HIGH', 'OPEN', 3),
+    ('SSDP Exposure', 'SSDP exposto na internet, serviço deveria rodar localmente.', 'MEDIUM', 'OPEN', 3),
+    ('Exposed Memcached', 'Memcached exposto à internet, deveria rodar localmente.', 'HIGH', 'OPEN', 3),
+    ('SLP Exposure', 'SLP exposto à internet, deveria rodar localmente.', 'MEDIUM', 'OPEN', 3);
 
 -- Insert vulnerabilities
 INSERT INTO vulnerabilities (title, description, severity, status, system_id)

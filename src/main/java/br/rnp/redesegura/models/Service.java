@@ -1,6 +1,6 @@
 package br.rnp.redesegura.models;
 
-import br.rnp.redesegura.models.enums.SystemHealth;
+import br.rnp.redesegura.models.enums.ServiceStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +10,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -17,8 +20,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "systems")
-public class System {
+@Table(name = "services")
+public class Service {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,16 +29,24 @@ public class System {
 
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "institution_id")
-    private Institution institution;
+    private String ip;
+
+    private Long port;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "service_protocols",
+            joinColumns = @JoinColumn(name = "service_id"),
+            inverseJoinColumns = @JoinColumn(name = "protocol_id")
+    )
+    private Set<Protocol> protocols = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
-    private SystemHealth health;
+    private ServiceStatus status;
 
     @ManyToOne
-    @JoinColumn(name = "responsible_id")
-    private User responsible;
+    @JoinColumn(name = "system_id")
+    private System system;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

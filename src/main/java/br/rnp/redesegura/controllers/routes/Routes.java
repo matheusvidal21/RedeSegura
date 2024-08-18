@@ -18,4 +18,6 @@ public interface Routes {
 
     String ACTION_LOGS = "/action-logs";
 
+    String SERVICES = "/services";
+
 }

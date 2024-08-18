@@ -58,11 +58,41 @@ CREATE TABLE IF NOT EXISTS systems (
                                        description TEXT,
                                        institution_id BIGINT,
                                        responsible_id BIGINT,
+                                       health VARCHAR(50),
                                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                                        FOREIGN KEY (institution_id) REFERENCES institutions(id) ON DELETE CASCADE,
                                        FOREIGN KEY (responsible_id) REFERENCES users(id) ON DELETE SET NULL
 );
+
+-- Create Protocol table
+CREATE TABLE IF NOT EXISTS protocols (
+                                         id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                                         name VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- Create Service table
+CREATE TABLE IF NOT EXISTS services (
+                                        id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                                        name VARCHAR(255) NOT NULL,
+                                        ip VARCHAR(45) NOT NULL,
+                                        port INT NOT NULL,
+                                        status VARCHAR(50) DEFAULT 'UNKNOWN',
+                                        system_id BIGINT,
+                                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                                        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                                        FOREIGN KEY (system_id) REFERENCES systems(id) ON DELETE CASCADE
+);
+
+-- Create Service_Protocols table
+CREATE TABLE IF NOT EXISTS service_protocols (
+                                                 service_id BIGINT,
+                                                 protocol_id BIGINT,
+                                                 PRIMARY KEY (service_id, protocol_id),
+                                                 FOREIGN KEY (service_id) REFERENCES services(id) ON DELETE CASCADE,
+                                                 FOREIGN KEY (protocol_id) REFERENCES protocols(id) ON DELETE CASCADE
+);
+
 
 -- Create Vulnerability table
 CREATE TABLE IF NOT EXISTS vulnerabilities (
