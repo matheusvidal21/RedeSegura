@@ -130,26 +130,33 @@ VALUES
     (20, (SELECT id FROM protocols WHERE name = 'TCP')),    -- SLP usa TCP
     (20, (SELECT id FROM protocols WHERE name = 'UDP'));    -- SLP usa UDP
 
+-- Insert vulnerability types
+INSERT INTO vulnerability_types (name, description)
+VALUES
+    ('DNS Recursion', 'Vulnerabilidade que permite ataques de DDoS através de recursão DNS.'),
+    ('NTP DDOS Amplification', 'Vulnerabilidade de amplificação DDOS em servidores NTP expostos.'),
+    ('NetBIOS Exposure', 'Exposição de informações sensíveis devido a configurações inadequadas do NetBIOS.'),
+    ('SNMP Public Community', 'Exposição de comunidades SNMP públicas, permitindo potencial manipulação e ataques de DDoS.'),
+    ('Samba Outdated Version', 'Vulnerabilidade em versões desatualizadas do Samba, suscetíveis a escaneamento de portas e acessos não autorizados.'),
+    ('Exposed MySQL', 'Exposição do serviço MySQL, permitindo conexões não autenticadas que podem ser exploradas.'),
+    ('Redis No Authentication', 'Exposição do Redis sem autenticação, permitindo acesso não autorizado ao serviço.'),
+    ('Exposed SSDP', 'Exposição indevida do serviço SSDP, que deve operar apenas em ambientes locais.'),
+    ('Exposed Memcached', 'Exposição do serviço Memcached, projetado para operação local, à internet, criando uma vulnerabilidade.'),
+    ('Exposed SLP', 'Exposição do serviço SLP à internet, quando deveria ser utilizado apenas localmente.');
 
 -- Vulnerabilidades no Sistema Vulnerável
-INSERT INTO vulnerabilities (title, description, severity, status, system_id)
+INSERT INTO vulnerabilities (title, severity, status, system_id, service_id, type_id)
 VALUES
-    ('DNS Recursion', 'Vulnerabilidade de DNS recursion podendo causar DDoS.', 'HIGH', 'OPEN', 3),
-    ('NTP v4', 'Vulnerabilidade de amplificação de DDoS em NTP versão 4.', 'HIGH', 'OPEN', 3),
-    ('NetBIOS Exposure', 'NetBIOS exposto permitindo consultas de informações sensíveis.', 'MEDIUM', 'OPEN', 3),
-    ('SNMP Public Community', 'Comunity "public" exposta, vulnerável a manipulação.', 'MEDIUM', 'OPEN', 3),
-    ('Samba Vulnerability', 'Versão defasada do Samba vulnerável a scanning e null session.', 'HIGH', 'OPEN', 3),
-    ('Exposed MySQL', 'MySQL exposto à internet, possibilitando conexões não autenticadas.', 'HIGH', 'OPEN', 3),
-    ('Redis Exposure', 'Redis exposto sem autenticação, vulnerável a conexões externas.', 'HIGH', 'OPEN', 3),
-    ('SSDP Exposure', 'SSDP exposto na internet, serviço deveria rodar localmente.', 'MEDIUM', 'OPEN', 3),
-    ('Exposed Memcached', 'Memcached exposto à internet, deveria rodar localmente.', 'HIGH', 'OPEN', 3),
-    ('SLP Exposure', 'SLP exposto à internet, deveria rodar localmente.', 'MEDIUM', 'OPEN', 3);
-
--- Insert vulnerabilities
-INSERT INTO vulnerabilities (title, description, severity, status, system_id)
-VALUES
-    ('SQL Injection', 'Vulnerabilidade de injeção de SQL no módulo de autenticação.', 'HIGH', 'OPEN', 1), -- Vulnerabilidade no sistema da UFRN
-    ('Cross-Site Scripting', 'Vulnerabilidade de XSS no módulo de comentários.', 'MEDIUM', 'RESOLVED', 2); -- Vulnerabilidade no sistema da UFC
+    ('Recursive DNS Query Exploitation', 'HIGH', 'OPEN', 1, (SELECT id FROM services WHERE name = 'DNS Service' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'DNS Recursion' LIMIT 1)),
+    ('NTP Reflection Attack', 'HIGH', 'OPEN', 1, (SELECT id FROM services WHERE name = 'NTP Service' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'NTP DDOS Amplification' LIMIT 1)),
+    ('NetBIOS Information Disclosure', 'MEDIUM', 'OPEN', 1, (SELECT id FROM services WHERE name = 'NetBIOS Service' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'NetBIOS Exposure' LIMIT 1)),
+    ('Public SNMP Community String Exposure', 'MEDIUM', 'OPEN', 1, (SELECT id FROM services WHERE name = 'SNMP Service' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'SNMP Public Community' LIMIT 1)),
+    ('Outdated Samba Null Session Exploit', 'HIGH', 'OPEN', 1, (SELECT id FROM services WHERE name = 'SMB Service' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Samba Outdated Version' LIMIT 1)),
+    ('Exposed MySQL Authentication Bypass', 'HIGH', 'OPEN', 1, (SELECT id FROM services WHERE name = 'MySQL Service' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Exposed MySQL' LIMIT 1)),
+    ('Unauthenticated Redis Access', 'HIGH', 'OPEN', 1, (SELECT id FROM services WHERE name = 'Redis Service' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Redis No Authentication' LIMIT 1)),
+    ('SSDP Service Exposure', 'MEDIUM', 'OPEN', 1, (SELECT id FROM services WHERE name = 'SSDP Service' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Exposed SSDP' LIMIT 1)),
+    ('Memcached Internet Exposure', 'HIGH', 'OPEN', 1, (SELECT id FROM services WHERE name = 'Memcached Service' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Exposed Memcached' LIMIT 1)),
+    ('SLP Service Exposure', 'MEDIUM', 'OPEN', 1, (SELECT id FROM services WHERE name = 'SLP Service' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Exposed SLP' LIMIT 1));
 
 -- Insert action logs
 INSERT INTO action_log (vulnerability_id, action, performed_by)

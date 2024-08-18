@@ -1,4 +1,4 @@
--- Create Address table
+-- Create addresses table
 CREATE TABLE IF NOT EXISTS addresses (
                                          id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                          street VARCHAR(255),
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS addresses (
                                          updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Create Institution table
+-- Create institutions table
 CREATE TABLE IF NOT EXISTS institutions (
                                             id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                             name VARCHAR(255) NOT NULL,
@@ -22,9 +22,7 @@ CREATE TABLE IF NOT EXISTS institutions (
                                             FOREIGN KEY (address_id) REFERENCES addresses(id)
 );
 
--- (Outras tabelas)
-
--- Create User table
+-- Create users table
 CREATE TABLE IF NOT EXISTS users (
                                      id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                      name VARCHAR(255) NOT NULL,
@@ -36,13 +34,13 @@ CREATE TABLE IF NOT EXISTS users (
                                      FOREIGN KEY (institution_id) REFERENCES institutions(id) ON DELETE CASCADE
 );
 
--- Create Role table
+-- Create roles table
 CREATE TABLE IF NOT EXISTS roles (
                                      id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                      name VARCHAR(100) NOT NULL
 );
 
--- Create User_Roles table (Many-to-Many relationship between Users and Roles)
+-- Create users_roles table
 CREATE TABLE IF NOT EXISTS users_roles (
                                            user_id BIGINT,
                                            role_id BIGINT,
@@ -51,7 +49,7 @@ CREATE TABLE IF NOT EXISTS users_roles (
                                            FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
 );
 
--- Create System table
+-- Create systems table
 CREATE TABLE IF NOT EXISTS systems (
                                        id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                        name VARCHAR(255) NOT NULL,
@@ -65,13 +63,13 @@ CREATE TABLE IF NOT EXISTS systems (
                                        FOREIGN KEY (responsible_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
--- Create Protocol table
+-- Create protocols table
 CREATE TABLE IF NOT EXISTS protocols (
                                          id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                          name VARCHAR(50) NOT NULL UNIQUE
 );
 
--- Create Service table
+-- Create services table
 CREATE TABLE IF NOT EXISTS services (
                                         id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                         name VARCHAR(255) NOT NULL,
@@ -84,7 +82,7 @@ CREATE TABLE IF NOT EXISTS services (
                                         FOREIGN KEY (system_id) REFERENCES systems(id) ON DELETE CASCADE
 );
 
--- Create Service_Protocols table
+-- Create service_protocols table
 CREATE TABLE IF NOT EXISTS service_protocols (
                                                  service_id BIGINT,
                                                  protocol_id BIGINT,
@@ -93,21 +91,31 @@ CREATE TABLE IF NOT EXISTS service_protocols (
                                                  FOREIGN KEY (protocol_id) REFERENCES protocols(id) ON DELETE CASCADE
 );
 
+-- Create vulnerability_types table
+CREATE TABLE IF NOT EXISTS vulnerability_types (
+                                                   id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                                                   name VARCHAR(255) NOT NULL,
+                                                   description TEXT
+);
 
--- Create Vulnerability table
+
+-- Create vulnerabilities table
 CREATE TABLE IF NOT EXISTS vulnerabilities (
                                                id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                                title VARCHAR(255) NOT NULL,
-                                               description TEXT,
                                                severity VARCHAR(50),
                                                status VARCHAR(50),
                                                system_id BIGINT,
+                                               service_id BIGINT NOT NULL,
+                                               type_id BIGINT NOT NULL,
                                                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                                resolved_at TIMESTAMP,
-                                               FOREIGN KEY (system_id) REFERENCES systems(id) ON DELETE CASCADE
+                                               FOREIGN KEY (system_id) REFERENCES systems(id) ON DELETE CASCADE,
+                                               FOREIGN KEY (type_id) REFERENCES vulnerability_types(id) ON DELETE CASCADE,
+                                               FOREIGN KEY (service_id) REFERENCES services(id) ON DELETE CASCADE
 );
 
--- Create ActionLog table
+-- Create action_log table
 CREATE TABLE IF NOT EXISTS action_log (
                                           id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                           vulnerability_id BIGINT,
@@ -118,7 +126,7 @@ CREATE TABLE IF NOT EXISTS action_log (
                                           FOREIGN KEY (performed_by) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Create Report table
+-- Create reports table
 CREATE TABLE IF NOT EXISTS reports (
                                        id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                        generated_by BIGINT,
@@ -127,7 +135,7 @@ CREATE TABLE IF NOT EXISTS reports (
                                        FOREIGN KEY (generated_by) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Create Tool table
+-- Create tools table
 CREATE TABLE IF NOT EXISTS tools (
                                      id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                      name VARCHAR(255) NOT NULL,
@@ -135,7 +143,7 @@ CREATE TABLE IF NOT EXISTS tools (
                                      integration_details TEXT
 );
 
--- Create Notification table
+-- Create notifications table
 CREATE TABLE IF NOT EXISTS notifications (
                                              id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                              recipient_id BIGINT,
