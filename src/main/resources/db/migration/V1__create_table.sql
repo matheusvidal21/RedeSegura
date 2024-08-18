@@ -125,29 +125,16 @@ CREATE TABLE IF NOT EXISTS action_log (
                                           FOREIGN KEY (performed_by) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Create reports table
-CREATE TABLE IF NOT EXISTS reports (
-                                       id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                                       generated_by BIGINT,
-                                       content TEXT,
-                                       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                                       FOREIGN KEY (generated_by) REFERENCES users(id) ON DELETE CASCADE
-);
-
--- Create tools table
-CREATE TABLE IF NOT EXISTS tools (
-                                     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                                     name VARCHAR(255) NOT NULL,
-                                     description TEXT,
-                                     integration_details TEXT
-);
-
--- Create notifications table
-CREATE TABLE IF NOT EXISTS notifications (
-                                             id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                                             recipient_id BIGINT,
-                                             message TEXT,
-                                             is_read BOOLEAN DEFAULT FALSE,
-                                             timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                                             FOREIGN KEY (recipient_id) REFERENCES users(id) ON DELETE CASCADE
+CREATE TABLE IF NOT EXISTS vulnerability_history (
+                                                     id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                                                     vulnerability_id BIGINT NOT NULL,
+                                                     title VARCHAR(255),
+                                                     severity VARCHAR(50),
+                                                     status VARCHAR(50),
+                                                     description TEXT,
+                                                     action_taken TEXT,
+                                                     changed_by BIGINT,
+                                                     changed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                                                     FOREIGN KEY (vulnerability_id) REFERENCES vulnerabilities(id) ON DELETE CASCADE,
+                                                     FOREIGN KEY (changed_by) REFERENCES users(id) ON DELETE SET NULL
 );

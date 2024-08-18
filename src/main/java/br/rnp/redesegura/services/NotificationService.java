@@ -1,8 +1,5 @@
 package br.rnp.redesegura.services;
 
-import br.rnp.redesegura.dto.NotificationDto;
-import br.rnp.redesegura.dto.response.NotificationResponse;
-
 import java.util.List;
 
 public interface NotificationService {

@@ -1,0 +1,50 @@
+### Contagem de instituições
+GET http://localhost:8080/rede-segura/dashboard/institutions/count
+
+### Contagem de vulnerabilidades resolvidas
+GET http://localhost:8080/rede-segura/dashboard/vulnerabilities/count-resolved
+
+### Contagem de vulnerabilidades não resolvidas
+GET http://localhost:8080/rede-segura/dashboard/vulnerabilities/count-not-resolved
+
+### Contagem de vulnerabilidades abertas
+GET http://localhost:8080/rede-segura/dashboard/vulnerabilities/count-open
+
+### Contagem de vulnerabilidades de alta severidade
+GET http://localhost:8080/rede-segura/dashboard/vulnerabilities/count-high-severity
+
+### Contagem de servidores degradados
+GET http://localhost:8080/rede-segura/dashboard/servers/count-degraded
+
+### Contagem de servidores operacionais
+GET http://localhost:8080/rede-segura/dashboard/servers/count-operational
+
+### Contagem de vulnerabilidades por instituição
+GET http://localhost:8080/rede-segura/dashboard/vulnerabilities/institution/1/count
+
+### Contagem de vulnerabilidades resolvidas por instituição
+GET http://localhost:8080/rede-segura/dashboard/vulnerabilities/institution/1/count-resolved
+
+### Contagem de vulnerabilidades não resolvidas por instituição
+GET http://localhost:8080/rede-segura/dashboard/vulnerabilities/institution/1/count-not-resolved
+
+### Contagem de vulnerabilidades abertas por instituição
+GET http://localhost:8080/rede-segura/dashboard/vulnerabilities/institution/1/count-open
+
+### Contagem de vulnerabilidades de alta severidade por instituição
+GET http://localhost:8080/rede-segura/dashboard/vulnerabilities/institution/1/count-high-severity
+
+### Vulnerabilidades de alta severidade por instituição
+GET http://localhost:8080/rede-segura/dashboard/vulnerabilities/institution/1/high-severity
+
+### Vulnerabilidades abertas por instituição
+GET http://localhost:8080/rede-segura/dashboard/vulnerabilities/institution/1/open
+
+### Vulnerabilidades abertas por tipo
+GET http://localhost:8080/rede-segura/dashboard/vulnerabilities/type/DNS%20Recursion/open
+
+### Vulnerabilidades resolvidas por tipo
+GET http://localhost:8080/rede-segura/dashboard/vulnerabilities/type/DNS%20Recursion/resolved
+
+### Serviços por instituição
+GET http://localhost:8080/rede-segura/dashboard/services/institution/1

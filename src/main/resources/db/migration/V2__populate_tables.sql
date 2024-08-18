@@ -34,13 +34,25 @@ VALUES
     (2, 2), -- Maria de Souza é USER
     (2, 3); -- Maria de Souza é SUPPORT
 
--- Insert servers
+-- Insert servers for UFRN
 INSERT INTO servers (name, description, institution_id, responsible_id, health)
 VALUES
-    ('Servidor de Gestão Acadêmica', 'Servidor que gerencia as atividades acadêmicas da UFRN', 1, 1, 'OPERATIONAL'), -- Servidor UFRN
-    ('Servidor de Biblioteca', 'Servidor de gerenciamento das bibliotecas da UFC', 2, 2, 'PARTIALLY_OPERATIONAL'),   -- Servidor UFC
-    ('Servidor Vulnerável', 'Servidor com vulnerabilidades conhecidas para testes', 1, 1, 'DEGRADED'),               -- Servidor Vulnerável
-    ('Servidor Estável', 'Servidor estável e seguro', 2, 2, 'OPERATIONAL');                                          -- Servidor Estável
+    ('Servidor Vulnerável', 'Servidor com vulnerabilidades conhecidas para testes', 1, 1, 'DEGRADED'),
+    ('Servidor A', 'Servidor de aplicação crítica', 1, 1, 'PARTIALLY_OPERATIONAL'),
+    ('Servidor B', 'Servidor de backup', 1, 1, 'OPERATIONAL'),
+    ('Servidor C', 'Servidor de desenvolvimento', 1, 1, 'DEGRADED'),
+    ('Servidor D', 'Servidor de BI', 1, 1, 'OPERATIONAL'),
+    ('Servidor E', 'Servidor de armazenamento', 1, 1, 'PARTIALLY_OPERATIONAL');
+
+-- Insert servers for UFC
+INSERT INTO servers (name, description, institution_id, responsible_id, health)
+VALUES
+    ('Servidor Estável', 'Servidor estável e seguro', 2, 2, 'OPERATIONAL'),
+    ('Servidor F', 'Servidor de aplicação web', 2, 2, 'PARTIALLY_OPERATIONAL'),
+    ('Servidor G', 'Servidor de gerenciamento de rede', 2, 2, 'DEGRADED'),
+    ('Servidor H', 'Servidor de testes', 2, 2, 'OPERATIONAL'),
+    ('Servidor I', 'Servidor de arquivos', 2, 2, 'PARTIALLY_OPERATIONAL'),
+    ('Servidor J', 'Servidor de banco de dados', 2, 2, 'DEGRADED');
 
 -- Insert protocols
 INSERT INTO protocols (name) VALUES
@@ -72,30 +84,30 @@ INSERT INTO protocols (name) VALUES
 -- Servidor Vulnerável
 INSERT INTO services (name, ip, port, server_id)
 VALUES
-    ('DNS Service', '200.130.38.131', 53, 3),    -- DNS
-    ('NTP Service', '200.130.38.131', 123, 3),   -- NTP
-    ('NetBIOS Service', '200.130.38.131', 137, 3), -- NetBIOS
-    ('SNMP Service', '200.130.38.131', 161, 3),  -- SNMP
-    ('SMB Service', '200.130.38.131', 445, 3),   -- SMB
-    ('MySQL Service', '200.130.38.131', 3306, 3), -- MySQL
-    ('Redis Service', '200.130.38.131', 6379, 3), -- Redis
-    ('SSDP Service', '200.130.38.131', 1900, 3), -- SSDP
-    ('Memcached Service', '200.130.38.131', 11211, 3), -- Memcached
-    ('SLP Service', '200.130.38.131', 427, 3); -- SLP
+    ('DNS Service', '200.130.38.131', 53, 1),    -- DNS
+    ('NTP Service', '200.130.38.131', 123, 1),   -- NTP
+    ('NetBIOS Service', '200.130.38.131', 137, 1), -- NetBIOS
+    ('SNMP Service', '200.130.38.131', 161, 1),  -- SNMP
+    ('SMB Service', '200.130.38.131', 445, 1),   -- SMB
+    ('MySQL Service', '200.130.38.131', 3306, 1), -- MySQL
+    ('Redis Service', '200.130.38.131', 6379, 1), -- Redis
+    ('SSDP Service', '200.130.38.131', 1900, 1), -- SSDP
+    ('Memcached Service', '200.130.38.131', 11211, 1), -- Memcached
+    ('SLP Service', '200.130.38.131', 427, 1); -- SLP
 
 -- Servidor Estável
 INSERT INTO services (name, ip, port, server_id)
 VALUES
-    ('DNS Service', '200.130.38.130', 53, 4),    -- DNS
-    ('NTP Service', '200.130.38.130', 123, 4),   -- NTP
-    ('NetBIOS Service', '200.130.38.130', 137, 4), -- NetBIOS
-    ('SNMP Service', '200.130.38.130', 161, 4),  -- SNMP
-    ('SMB Service', '200.130.38.130', 445, 4),   -- SMB
-    ('MySQL Service', '200.130.38.130', 3306, 4), -- MySQL
-    ('Redis Service', '200.130.38.130', 6379, 4), -- Redis
-    ('SSDP Service', '200.130.38.130', 1900, 4), -- SSDP
-    ('Memcached Service', '200.130.38.130', 11211, 4), -- Memcached
-    ('SLP Service', '200.130.38.130', 427, 4); -- SLP
+    ('DNS Service', '200.130.38.130', 53, 7),    -- DNS
+    ('NTP Service', '200.130.38.130', 123, 7),   -- NTP
+    ('NetBIOS Service', '200.130.38.130', 137, 7), -- NetBIOS
+    ('SNMP Service', '200.130.38.130', 161, 7),  -- SNMP
+    ('SMB Service', '200.130.38.130', 445, 7),   -- SMB
+    ('MySQL Service', '200.130.38.130', 3306, 7), -- MySQL
+    ('Redis Service', '200.130.38.130', 6379, 7), -- Redis
+    ('SSDP Service', '200.130.38.130', 1900, 7), -- SSDP
+    ('Memcached Service', '200.130.38.130', 11211, 7), -- Memcached
+    ('SLP Service', '200.130.38.130', 427, 7); -- SLP
 
 -- Associando Protocolos aos Serviços no Servidor Vulnerável
 INSERT INTO service_protocols (service_id, protocol_id)
@@ -171,29 +183,63 @@ VALUES
     ('Stable Memcached Internet Exposure - AMBIENTE ESTÁVEL', 'HIGH', 'OPEN', 4, (SELECT id FROM services WHERE name = 'Memcached Service' AND ip = '200.130.38.130' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Exposed Memcached' LIMIT 1)),
     ('Stable SLP Service Exposure - AMBIENTE ESTÁVEL', 'MEDIUM', 'RESOLVED', 4, (SELECT id FROM services WHERE name = 'SLP Service' AND ip = '200.130.38.130' LIMIT 1), (SELECT id FROM vulnerability_types WHERE name = 'Exposed SLP' LIMIT 1));
 
--- Insert action logs
-INSERT INTO action_log (vulnerability_id, action, performed_by)
-VALUES
-    (1, 'Análise inicial da vulnerabilidade', 1), -- Ação no Servidor da UFRN
-    (2, 'Correção aplicada e testada', 2);        -- Ação no Servidor da UFC
 
--- Insert reports
-INSERT INTO reports (generated_by, content)
+-- Insert additional services for other servers (excluding Servidor Vulnerável and Servidor Estável)
+INSERT INTO services (name, ip, port, server_id)
 VALUES
-    (1, 'Relatório de análise da vulnerabilidade SQL Injection no servidor de gestão acadêmica.'), -- Relatório do João da Silva (UFRN)
-    (2, 'Relatório de resolução da vulnerabilidade XSS no servidor de biblioteca.');              -- Relatório da Maria de Souza (UFC)
+    ('Apache HTTP Service', '200.130.38.140', 80, 2),   -- Servidor A
+    ('PostgreSQL Service', '200.130.38.141', 5432, 3),   -- Servidor B
+    ('MongoDB Service', '200.130.38.142', 27017, 4),   -- Servidor C
+    ('Nginx Service', '200.130.38.143', 443, 5),   -- Servidor D
+    ('ElasticSearch Service', '200.130.38.144', 9200, 6),   -- Servidor E
+    ('SMTP Service', '200.130.38.150', 25, 8),   -- Servidor F
+    ('Redis Service', '200.130.38.151', 6379, 9),   -- Servidor G
+    ('MySQL Service', '200.130.38.152', 3306, 10),   -- Servidor H
+    ('FTP Service', '200.130.38.153', 21, 11),   -- Servidor I
+    ('MariaDB Service', '200.130.38.154', 3306, 12);   -- Servidor J
 
--- Insert tools
-INSERT INTO tools (name, description, integration_details)
+-- Associando Protocolos aos Serviços nos Servidores (excluindo Servidor Vulnerável e Servidor Estável)
+INSERT INTO service_protocols (service_id, protocol_id)
 VALUES
-    ('Nmap', 'Ferramenta de varredura de redes e descoberta de hosts.', 'Integração via linha de comando.'),
-    ('Burp Suite', 'Ferramenta de teste de segurança de aplicações web.', 'Integração via proxy.');
+    (21, (SELECT id FROM protocols WHERE name = 'TCP')),    -- Apache HTTP usa TCP
+    (22, (SELECT id FROM protocols WHERE name = 'TCP')),    -- PostgreSQL usa TCP
+    (23, (SELECT id FROM protocols WHERE name = 'TCP')),    -- MongoDB usa TCP
+    (24, (SELECT id FROM protocols WHERE name = 'TCP')),    -- Nginx usa TCP
+    (25, (SELECT id FROM protocols WHERE name = 'TCP')),    -- ElasticSearch usa TCP
+    (26, (SELECT id FROM protocols WHERE name = 'TCP')),    -- SMTP usa TCP
+    (27, (SELECT id FROM protocols WHERE name = 'TCP')),    -- Redis usa TCP
+    (28, (SELECT id FROM protocols WHERE name = 'TCP')),    -- MySQL usa TCP
+    (29, (SELECT id FROM protocols WHERE name = 'TCP')),    -- FTP usa TCP
+    (30, (SELECT id FROM protocols WHERE name = 'TCP'));    -- MariaDB usa TCP
 
--- Insert notifications
-INSERT INTO notifications (recipient_id, message, is_read)
+-- Insert vulnerabilities into other servers (excluding Servidor Vulnerável and Servidor Estável)
+INSERT INTO vulnerabilities (title, severity, status, server_id, service_id, type_id)
 VALUES
-    (1, 'Nova vulnerabilidade identificada no servidor de gestão acadêmica.', FALSE), -- Notificação para João da Silva (UFRN)
-    (2, 'Correção aplicada na vulnerabilidade XSS do servidor de biblioteca.', TRUE); -- Notificação para Maria de Souza (UFC)
+    ('Apache HTTP Server Information Disclosure', 'MEDIUM', 'OPEN', 2, 21, (SELECT id FROM vulnerability_types WHERE name = 'Exposed SSDP' LIMIT 1)),
+    ('PostgreSQL Unauthorized Access', 'HIGH', 'OPEN', 3, 22, (SELECT id FROM vulnerability_types WHERE name = 'Exposed MySQL' LIMIT 1)),
+    ('MongoDB Open Access', 'CRITICAL', 'OPEN', 4, 23, (SELECT id FROM vulnerability_types WHERE name = 'Redis No Authentication' LIMIT 1)),
+    ('Nginx Insecure Configuration', 'MEDIUM', 'RESOLVED', 5, 24, (SELECT id FROM vulnerability_types WHERE name = 'Samba Outdated Version' LIMIT 1)),
+    ('ElasticSearch Publicly Accessible', 'HIGH', 'OPEN', 6, 25, (SELECT id FROM vulnerability_types WHERE name = 'Exposed Memcached' LIMIT 1)),
+    ('SMTP Open Relay', 'HIGH', 'OPEN', 8, 26, (SELECT id FROM vulnerability_types WHERE name = 'SNMP Public Community' LIMIT 1)),
+    ('Redis Insecure Configuration', 'CRITICAL', 'OPEN', 9, 27, (SELECT id FROM vulnerability_types WHERE name = 'Redis No Authentication' LIMIT 1)),
+    ('MySQL Weak Passwords', 'LOW', 'OPEN', 10, 28, (SELECT id FROM vulnerability_types WHERE name = 'Exposed MySQL' LIMIT 1)),
+    ('FTP Anonymous Login Allowed', 'MEDIUM', 'OPEN', 11, 29, (SELECT id FROM vulnerability_types WHERE name = 'NetBIOS Exposure' LIMIT 1)),
+    ('MariaDB SQL Injection Vulnerability', 'HIGH', 'OPEN', 12, 30, (SELECT id FROM vulnerability_types WHERE name = 'DNS Recursion' LIMIT 1));
 
--- Enable foreign key checks after data insertion
+-- Insert records into the vulnerability_history table for tracking changes (excluding Servidor Vulnerável and Servidor Estável)
+INSERT INTO vulnerability_history (vulnerability_id, title, severity, status, description, action_taken, changed_by)
+VALUES
+    ((SELECT id FROM vulnerabilities WHERE title = 'Apache HTTP Server Information Disclosure' LIMIT 1), 'Apache HTTP Server Information Disclosure', 'MEDIUM', 'OPEN', 'Sensitive information exposed by Apache server.', 'Initial discovery of vulnerability', 1),
+    ((SELECT id FROM vulnerabilities WHERE title = 'PostgreSQL Unauthorized Access' LIMIT 1), 'PostgreSQL Unauthorized Access', 'HIGH', 'OPEN', 'Unauthorized access allowed to PostgreSQL database.', 'Initial discovery of vulnerability', 1),
+    ((SELECT id FROM vulnerabilities WHERE title = 'MongoDB Open Access' LIMIT 1), 'MongoDB Open Access', 'CRITICAL', 'OPEN', 'MongoDB database is publicly accessible without authentication.', 'Initial discovery of vulnerability', 1),
+    ((SELECT id FROM vulnerabilities WHERE title = 'Nginx Insecure Configuration' LIMIT 1), 'Nginx Insecure Configuration', 'MEDIUM', 'RESOLVED', 'Nginx server was configured with weak security settings.', 'Vulnerability resolved after security patches applied', 2),
+    ((SELECT id FROM vulnerabilities WHERE title = 'ElasticSearch Publicly Accessible' LIMIT 1), 'ElasticSearch Publicly Accessible', 'HIGH', 'OPEN', 'ElasticSearch service is accessible over the internet.', 'Initial discovery of vulnerability', 1),
+    ((SELECT id FROM vulnerabilities WHERE title = 'SMTP Open Relay' LIMIT 1), 'SMTP Open Relay', 'HIGH', 'OPEN', 'SMTP server is misconfigured as an open relay.', 'Initial discovery of vulnerability', 2),
+    ((SELECT id FROM vulnerabilities WHERE title = 'Redis Insecure Configuration' LIMIT 1), 'Redis Insecure Configuration', 'CRITICAL', 'OPEN', 'Redis server is configured without authentication, allowing unauthorized access.', 'Initial discovery of vulnerability', 2),
+    ((SELECT id FROM vulnerabilities WHERE title = 'MySQL Weak Passwords' LIMIT 1), 'MySQL Weak Passwords', 'LOW', 'OPEN', 'MySQL service allows weak password authentication.', 'Initial discovery of vulnerability', 2),
+    ((SELECT id FROM vulnerabilities WHERE title = 'FTP Anonymous Login Allowed' LIMIT 1), 'FTP Anonymous Login Allowed', 'MEDIUM', 'OPEN', 'FTP service allows anonymous login without restrictions.', 'Initial discovery of vulnerability', 2),
+    ((SELECT id FROM vulnerabilities WHERE title = 'MariaDB SQL Injection Vulnerability' LIMIT 1), 'MariaDB SQL Injection Vulnerability', 'HIGH', 'OPEN', 'SQL Injection vulnerability found in MariaDB service.', 'Initial discovery of vulnerability', 2);
+
+-- Re-enable foreign key checks after data insertion
 SET FOREIGN_KEY_CHECKS = 1;
+

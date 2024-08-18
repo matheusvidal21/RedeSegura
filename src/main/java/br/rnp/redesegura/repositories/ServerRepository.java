@@ -26,4 +26,13 @@ public interface ServerRepository extends JpaRepository<Server, Long> {
     @Query("SELECT COUNT(s) FROM Server s WHERE s.health = 'DEGRADED' AND s.institution.id = :institutionId")
     int countDegradedServersByInstitution(@Param("institutionId") Long institutionId);
 
+    @Query("SELECT COUNT(s) FROM Server s WHERE s.health = 'OPERATIONAL' AND s.institution.id = :institutionId")
+    int countOperationalServers(Long institutionId);
+
+    @Query("SELECT COUNT(s) FROM Server s WHERE s.health = 'PARTIALLY_OPERATIONAL' AND s.institution.id = :institutionId")
+    int countPartiallyOperationalServers(Long institutionId);
+
+    @Query("SELECT COUNT(s) FROM Server s WHERE s.health = 'DEGRADED' AND s.institution.id = :institutionId")
+    int countDegradedServers(Long institutionId);
+
 }

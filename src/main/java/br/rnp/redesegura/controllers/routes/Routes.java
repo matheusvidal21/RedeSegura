@@ -6,17 +6,9 @@ public interface Routes {
 
     String VULNERABILITIES = "/vulnerabilities";
 
-    String TOOLS = "/tools";
-
-    String REPORTS = "/reports";
-
     String INSTITUTIONS = "/institutions";
 
-    String NOTIFICATIONS = "/notifications";
-
     String SERVERS = "/servers";
-
-    String ACTION_LOGS = "/action-logs";
 
     String SERVICES = "/services";
 
