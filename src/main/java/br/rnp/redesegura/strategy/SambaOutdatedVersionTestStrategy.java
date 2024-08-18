@@ -47,15 +47,7 @@ public class SambaOutdatedVersionTestStrategy implements VulnerabilityTestStrate
                 isVulnerable = process.exitValue() == 0 && output.contains("Sharename");
             }
 
-            VulnerabilityTestResponse vulnerabilityTestResponse = VulnerabilityTestResponse.builder()
-                    .vulnerabilityId(vulnerability.getId())
-                    .vulnerabilityTitle(vulnerability.getTitle())
-                    .service(vulnerability.getService().getName())
-                    .ip(ip)
-                    .port(vulnerability.getService().getPort())
-                    .protocols(vulnerability.getService().getProtocols().stream().map(protocol -> protocol.getName()).collect(Collectors.toSet()))
-                    .testedAt(LocalDateTime.now().toString())
-                    .build();
+            var vulnerabilityTestResponse = createResponse(vulnerability);
 
             if (isVulnerable) {
                 vulnerabilityTestResponse.setTestStatus(TestStatus.VULNERABLE);

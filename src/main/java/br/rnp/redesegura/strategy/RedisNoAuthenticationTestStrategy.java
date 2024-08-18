@@ -32,15 +32,7 @@ public class RedisNoAuthenticationTestStrategy implements VulnerabilityTestStrat
 
             process.waitFor();
 
-            VulnerabilityTestResponse vulnerabilityTestResponse = VulnerabilityTestResponse.builder()
-                    .vulnerabilityId(vulnerability.getId())
-                    .vulnerabilityTitle(vulnerability.getTitle())
-                    .service(vulnerability.getService().getName())
-                    .ip(ip)
-                    .port(port)
-                    .protocols(vulnerability.getService().getProtocols().stream().map(Protocol::getName).collect(Collectors.toSet()))
-                    .testedAt(LocalDateTime.now().toString())
-                    .build();
+            var vulnerabilityTestResponse = createResponse(vulnerability);
 
             // Verifica a resposta
             if (output.contains("succeeded")) {

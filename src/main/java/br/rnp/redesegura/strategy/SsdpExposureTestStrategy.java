@@ -26,6 +26,7 @@ public class SsdpExposureTestStrategy implements VulnerabilityTestStrategy {
 
             if (vulnerability.getService().getPort() != STANDARD_SSDP_PORT){
                 port = Integer.parseInt(vulnerability.getService().getPort().toString());
+                vulnerability.getService().setPort((long) port);
             }
 
             // Monta a requisição SSDP
@@ -49,15 +50,7 @@ public class SsdpExposureTestStrategy implements VulnerabilityTestStrategy {
                 socket.receive(response);
                 String responseStr = new String(response.getData(), 0, response.getLength());
 
-                VulnerabilityTestResponse vulnerabilityTestResponse = VulnerabilityTestResponse.builder()
-                        .vulnerabilityId(vulnerability.getId())
-                        .vulnerabilityTitle(vulnerability.getTitle())
-                        .service(vulnerability.getService().getName())
-                        .ip(ip)
-                        .port((long) port)
-                        .protocols(vulnerability.getService().getProtocols().stream().map(Protocol::getName).collect(Collectors.toSet()))
-                        .testedAt(LocalDateTime.now().toString())
-                        .build();
+                var vulnerabilityTestResponse = createResponse(vulnerability);
 
                 if (responseStr.contains("HTTP/1.1 200 OK")) {
                     vulnerabilityTestResponse.setTestStatus(TestStatus.VULNERABLE);
@@ -69,17 +62,10 @@ public class SsdpExposureTestStrategy implements VulnerabilityTestStrategy {
 
                 return vulnerabilityTestResponse;
             } catch (Exception e) {
-                return VulnerabilityTestResponse.builder()
-                        .vulnerabilityId(vulnerability.getId())
-                        .vulnerabilityTitle(vulnerability.getTitle())
-                        .service(vulnerability.getService().getName())
-                        .ip(ip)
-                        .port((long) port)
-                        .protocols(vulnerability.getService().getProtocols().stream().map(Protocol::getName).collect(Collectors.toSet()))
-                        .testedAt(LocalDateTime.now().toString())
-                        .testStatus(TestStatus.NOT_VULNERABLE)
-                        .testResultMessage("O serviço SSDP não respondeu, indicando que o serviço está seguro ou a resposta foi filtrada.")
-                        .build();
+                var vulnerabilityTestResponse = createResponse(vulnerability);
+                vulnerabilityTestResponse.setTestStatus(TestStatus.NOT_VULNERABLE);
+                vulnerabilityTestResponse.setTestResultMessage("O serviço SSDP não respondeu, indicando que o serviço está seguro ou a resposta foi filtrada.");
+                return vulnerabilityTestResponse;
             } finally {
                 socket.close();
             }

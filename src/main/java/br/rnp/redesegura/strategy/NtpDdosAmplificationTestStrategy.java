@@ -39,16 +39,7 @@ public class NtpDdosAmplificationTestStrategy implements VulnerabilityTestStrate
 
             process.waitFor();
 
-            VulnerabilityTestResponse vulnerabilityTestResponse = VulnerabilityTestResponse.builder()
-                    .vulnerabilityId(vulnerability.getId())
-                    .vulnerabilityTitle(vulnerability.getTitle())
-                    .service(vulnerability.getService().getName())
-                    .ip(ip)
-                    .port(port)
-                    .protocols(vulnerability.getService().getProtocols().stream().map(Protocol::getName).collect(Collectors.toSet()))
-                    .testedAt(LocalDateTime.now().toString())
-                    .build();
-
+            var vulnerabilityTestResponse = createResponse(vulnerability);
             if (isVulnerable){
                 vulnerabilityTestResponse.setTestStatus(TestStatus.VULNERABLE);
                 vulnerabilityTestResponse.setTestResultMessage("O serviço NTP está vulnerável a ataques de amplificação DDOS. O modo 6 do NTP está exposto e pode ser explorado por atacantes.");

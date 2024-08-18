@@ -31,15 +31,7 @@ public class MysqlExposedTestStrategy implements VulnerabilityTestStrategy {
 
             process.waitFor();
 
-            VulnerabilityTestResponse vulnerabilityTestResponse = VulnerabilityTestResponse.builder()
-                    .vulnerabilityId(vulnerability.getId())
-                    .vulnerabilityTitle(vulnerability.getTitle())
-                    .service(vulnerability.getService().getName())
-                    .ip(ip)
-                    .port(port)
-                    .protocols(vulnerability.getService().getProtocols().stream().map(Protocol::getName).collect(Collectors.toSet()))
-                    .testedAt(LocalDateTime.now().toString())
-                    .build();
+            var vulnerabilityTestResponse = createResponse(vulnerability);
 
             // Verifica a resposta
             if (output.contains("caching_sha2_password") || output.contains("mysql_native_password")) {

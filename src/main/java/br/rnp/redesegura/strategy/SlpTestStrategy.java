@@ -32,15 +32,7 @@ public class SlpTestStrategy implements VulnerabilityTestStrategy {
 
             process.waitFor(); // Aguarda o término do processo
 
-            VulnerabilityTestResponse vulnerabilityTestResponse = VulnerabilityTestResponse.builder()
-                    .vulnerabilityId(vulnerability.getId())
-                    .vulnerabilityTitle(vulnerability.getTitle())
-                    .service(vulnerability.getService().getName())
-                    .ip(ip)
-                    .port(port)
-                    .protocols(vulnerability.getService().getProtocols().stream().map(Protocol::getName).collect(Collectors.toSet()))
-                    .testedAt(LocalDateTime.now().toString())
-                    .build();
+            var vulnerabilityTestResponse = createResponse(vulnerability);
 
             if (output.contains("open")) {
                 vulnerabilityTestResponse.setTestStatus(TestStatus.VULNERABLE);

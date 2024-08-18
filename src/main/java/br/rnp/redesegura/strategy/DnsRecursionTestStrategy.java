@@ -2,12 +2,15 @@ package br.rnp.redesegura.strategy;
 
 import br.rnp.redesegura.dto.response.VulnerabilityTestResponse;
 import br.rnp.redesegura.exception.FailedTestException;
+import br.rnp.redesegura.models.Protocol;
 import br.rnp.redesegura.models.Vulnerability;
 import br.rnp.redesegura.models.enums.TestStatus;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DnsRecursionTestStrategy implements VulnerabilityTestStrategy {
@@ -36,16 +39,7 @@ public class DnsRecursionTestStrategy implements VulnerabilityTestStrategy {
             }
 
             process.waitFor();
-
-            VulnerabilityTestResponse vulnerabilityTestResponse = VulnerabilityTestResponse.builder()
-                    .vulnerabilityId(vulnerability.getId())
-                    .vulnerabilityTitle(vulnerability.getTitle())
-                    .service(vulnerability.getService().getName())
-                    .ip(ip)
-                    .port(vulnerability.getService().getPort())
-                    .protocols(vulnerability.getService().getProtocols().stream().map(protocol -> protocol.getName()).collect(Collectors.toSet()))
-                    .testedAt(LocalDateTime.now().toString())
-                    .build();
+            var vulnerabilityTestResponse = createResponse(vulnerability);
 
             if (isVulnerable){
                 vulnerabilityTestResponse.setTestStatus(TestStatus.VULNERABLE);

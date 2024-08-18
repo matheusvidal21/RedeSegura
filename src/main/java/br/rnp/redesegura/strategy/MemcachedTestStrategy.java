@@ -9,6 +9,7 @@ import br.rnp.redesegura.models.enums.TestStatus;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class MemcachedTestStrategy implements VulnerabilityTestStrategy {
@@ -30,15 +31,7 @@ public class MemcachedTestStrategy implements VulnerabilityTestStrategy {
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String output = reader.lines().collect(Collectors.joining("\n"));
 
-            VulnerabilityTestResponse vulnerabilityTestResponse = VulnerabilityTestResponse.builder()
-                    .vulnerabilityId(vulnerability.getId())
-                    .vulnerabilityTitle(vulnerability.getTitle())
-                    .service(vulnerability.getService().getName())
-                    .ip(ip)
-                    .port(port)
-                    .protocols(vulnerability.getService().getProtocols().stream().map(Protocol::getName).collect(Collectors.toSet()))
-                    .testedAt(LocalDateTime.now().toString())
-                    .build();
+            var vulnerabilityTestResponse = createResponse(vulnerability);
 
             if (output.contains("open")) {
                 vulnerabilityTestResponse.setTestStatus(TestStatus.VULNERABLE);
