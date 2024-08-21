@@ -1,6 +1,5 @@
 package br.rnp.redesegura.dto;
 
-import br.rnp.redesegura.models.Protocol;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -30,6 +29,5 @@ public class ServiceDto {
 
     @NotNull(message = "Server ID is required")
     private Long serverId;
-
 
 }

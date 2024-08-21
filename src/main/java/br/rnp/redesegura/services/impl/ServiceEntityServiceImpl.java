@@ -7,6 +7,7 @@ import br.rnp.redesegura.mapper.ServiceMapper;
 import br.rnp.redesegura.models.Protocol;
 import br.rnp.redesegura.models.Service;
 import br.rnp.redesegura.models.Server;
+import br.rnp.redesegura.models.enums.ServiceStatus;
 import br.rnp.redesegura.repositories.ProtocolRepository;
 import br.rnp.redesegura.repositories.ServiceRepository;
 import br.rnp.redesegura.repositories.ServerRepository;
@@ -81,6 +82,13 @@ public class ServiceEntityServiceImpl implements ServiceEntityService {
         service.setServer(server);
 
         return ServiceMapper.toResponse(serviceRepository.save(service));
+    }
+
+    public void serviceStatusUpdate(Long id, ServiceStatus status) {
+        Service service = serviceRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Service not found"));
+        service.setStatus(status);
+        serviceRepository.save(service);
     }
 
 }

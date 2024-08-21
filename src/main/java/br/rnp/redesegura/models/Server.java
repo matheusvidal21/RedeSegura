@@ -32,10 +32,6 @@ public class Server {
     @Enumerated(EnumType.STRING)
     private ServerHealth health;
 
-    @ManyToOne
-    @JoinColumn(name = "responsible_id")
-    private User responsible;
-
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

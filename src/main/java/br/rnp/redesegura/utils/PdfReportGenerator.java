@@ -213,7 +213,6 @@
 
             Paragraph aboutParagraph = new Paragraph();
             aboutParagraph.add(new Chunk("Sobre a vulnerabilidade", boldFont));
-            aboutParagraph.add(new Chunk(reason, font));
             aboutParagraph.setAlignment(Element.ALIGN_CENTER);
             aboutParagraph.setSpacingBefore(20);
             aboutParagraph.setSpacingAfter(20);
@@ -230,14 +229,14 @@
             Paragraph importanceParagraph = new Paragraph();
             importanceParagraph.add(new Chunk("Importância: ", boldFont));
             importanceParagraph.add(new Chunk(importance, font));
-            reasonParagraph.setAlignment(Element.ALIGN_JUSTIFIED);
+            importanceParagraph.setAlignment(Element.ALIGN_JUSTIFIED);
             importanceParagraph.setLeading(20f);
             document.add(importanceParagraph);
 
             Paragraph solutionParagraph = new Paragraph();
             solutionParagraph.add(new Chunk("Possível Solução: ", boldFont));
             solutionParagraph.add(new Chunk(solution, font));
-            reasonParagraph.setAlignment(Element.ALIGN_JUSTIFIED);
+            solutionParagraph.setAlignment(Element.ALIGN_JUSTIFIED);
             solutionParagraph.setLeading(20f);
             document.add(solutionParagraph);
         }

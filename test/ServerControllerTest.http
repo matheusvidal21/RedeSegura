@@ -18,7 +18,6 @@ Content-Type: application/json
   "name": "Server 1",
   "description": "Server Description",
   "institutionId": 1,
-  "responsibleId": 1
 }
 
 ###
@@ -31,7 +30,6 @@ Content-Type: application/json
   "name": "Updated Server",
   "description": "Updated Description",
   "institutionId": 1,
-  "responsibleId": 1
 }
 
 ###

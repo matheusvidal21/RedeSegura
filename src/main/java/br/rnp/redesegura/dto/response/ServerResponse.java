@@ -17,6 +17,4 @@ public class ServerResponse {
 
     private String institutionName;
 
-    private String responsibleName;
-
 }

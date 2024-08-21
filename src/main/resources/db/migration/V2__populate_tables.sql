@@ -13,46 +13,25 @@ VALUES
     ('Universidade Federal do Rio Grande do Norte', 1, 'contato@ufrn.br'), -- UFRN
     ('Universidade Federal do Ceará', 2, 'contato@ufc.br');                -- UFC
 
--- Insert roles
-INSERT INTO roles (name)
-VALUES
-    ('ADMIN'),
-    ('USER'),
-    ('SUPPORT');
-
--- Insert users
-INSERT INTO users (name, email, password, institution_id)
-VALUES
-    ('João da Silva', 'joao.silva@ufrn.br', 'senhaSegura123', 1), -- Usuário UFRN
-    ('Maria de Souza', 'maria.souza@ufc.br', 'senhaForte456', 2); -- Usuário UFC
-
--- Assign roles to users
-INSERT INTO users_roles (user_id, role_id)
-VALUES
-    (1, 1), -- João da Silva é ADMIN
-    (1, 2), -- João da Silva é USER
-    (2, 2), -- Maria de Souza é USER
-    (2, 3); -- Maria de Souza é SUPPORT
-
 -- Insert servers for UFRN
-INSERT INTO servers (name, description, institution_id, responsible_id, health)
+INSERT INTO servers (name, description, institution_id, health)
 VALUES
-    ('Servidor Vulnerável', 'Servidor com vulnerabilidades conhecidas para testes', 1, 1, 'DEGRADED'),
-    ('Servidor A', 'Servidor de aplicação crítica', 1, 1, 'PARTIALLY_OPERATIONAL'),
-    ('Servidor B', 'Servidor de backup', 1, 1, 'OPERATIONAL'),
-    ('Servidor C', 'Servidor de desenvolvimento', 1, 1, 'DEGRADED'),
-    ('Servidor D', 'Servidor de BI', 1, 1, 'OPERATIONAL'),
-    ('Servidor E', 'Servidor de armazenamento', 1, 1, 'PARTIALLY_OPERATIONAL');
+    ('Servidor Vulnerável', 'Servidor com vulnerabilidades conhecidas para testes', 1, 'DEGRADED'),
+    ('Servidor A', 'Servidor de aplicação crítica', 1,  'PARTIALLY_OPERATIONAL'),
+    ('Servidor B', 'Servidor de backup', 1,  'OPERATIONAL'),
+    ('Servidor C', 'Servidor de desenvolvimento', 1, 'DEGRADED'),
+    ('Servidor D', 'Servidor de BI', 1, 'OPERATIONAL'),
+    ('Servidor E', 'Servidor de armazenamento', 1,  'PARTIALLY_OPERATIONAL');
 
 -- Insert servers for UFC
-INSERT INTO servers (name, description, institution_id, responsible_id, health)
+INSERT INTO servers (name, description, institution_id, health)
 VALUES
-    ('Servidor Estável', 'Servidor estável e seguro', 2, 2, 'OPERATIONAL'),
-    ('Servidor F', 'Servidor de aplicação web', 2, 2, 'PARTIALLY_OPERATIONAL'),
-    ('Servidor G', 'Servidor de gerenciamento de rede', 2, 2, 'DEGRADED'),
-    ('Servidor H', 'Servidor de testes', 2, 2, 'OPERATIONAL'),
-    ('Servidor I', 'Servidor de arquivos', 2, 2, 'PARTIALLY_OPERATIONAL'),
-    ('Servidor J', 'Servidor de banco de dados', 2, 2, 'DEGRADED');
+    ('Servidor Estável', 'Servidor estável e seguro', 2,  'OPERATIONAL'),
+    ('Servidor F', 'Servidor de aplicação web', 2, 'PARTIALLY_OPERATIONAL'),
+    ('Servidor G', 'Servidor de gerenciamento de rede', 2, 'DEGRADED'),
+    ('Servidor H', 'Servidor de testes', 2, 'OPERATIONAL'),
+    ('Servidor I', 'Servidor de arquivos', 2, 'PARTIALLY_OPERATIONAL'),
+    ('Servidor J', 'Servidor de banco de dados', 2, 'DEGRADED');
 
 -- Insert protocols
 INSERT INTO protocols (name) VALUES
@@ -227,18 +206,18 @@ VALUES
     ('MariaDB SQL Injection Vulnerability', 'HIGH', 'OPEN', 12, 30, (SELECT id FROM vulnerability_types WHERE name = 'DNS Recursion' LIMIT 1));
 
 -- Insert records into the vulnerability_history table for tracking changes (excluding Servidor Vulnerável and Servidor Estável)
-INSERT INTO vulnerability_history (vulnerability_id, title, severity, status, description, action_taken, changed_by)
+INSERT INTO vulnerability_history (vulnerability_id, title, severity, status, description, action_taken)
 VALUES
-    ((SELECT id FROM vulnerabilities WHERE title = 'Apache HTTP Server Information Disclosure' LIMIT 1), 'Apache HTTP Server Information Disclosure', 'MEDIUM', 'OPEN', 'Sensitive information exposed by Apache server.', 'Initial discovery of vulnerability', 1),
-    ((SELECT id FROM vulnerabilities WHERE title = 'PostgreSQL Unauthorized Access' LIMIT 1), 'PostgreSQL Unauthorized Access', 'HIGH', 'OPEN', 'Unauthorized access allowed to PostgreSQL database.', 'Initial discovery of vulnerability', 1),
-    ((SELECT id FROM vulnerabilities WHERE title = 'MongoDB Open Access' LIMIT 1), 'MongoDB Open Access', 'CRITICAL', 'OPEN', 'MongoDB database is publicly accessible without authentication.', 'Initial discovery of vulnerability', 1),
-    ((SELECT id FROM vulnerabilities WHERE title = 'Nginx Insecure Configuration' LIMIT 1), 'Nginx Insecure Configuration', 'MEDIUM', 'RESOLVED', 'Nginx server was configured with weak security settings.', 'Vulnerability resolved after security patches applied', 2),
-    ((SELECT id FROM vulnerabilities WHERE title = 'ElasticSearch Publicly Accessible' LIMIT 1), 'ElasticSearch Publicly Accessible', 'HIGH', 'OPEN', 'ElasticSearch service is accessible over the internet.', 'Initial discovery of vulnerability', 1),
+    ((SELECT id FROM vulnerabilities WHERE title = 'Apache HTTP Server Information Disclosure' LIMIT 1), 'Apache HTTP Server Information Disclosure', 'MEDIUM', 'OPEN', 'Sensitive information exposed by Apache server.', 'Initial discovery of vulnerability'),
+    ((SELECT id FROM vulnerabilities WHERE title = 'PostgreSQL Unauthorized Access' LIMIT 1), 'PostgreSQL Unauthorized Access', 'HIGH', 'OPEN', 'Unauthorized access allowed to PostgreSQL database.', 'Initial discovery of vulnerability'),
+    ((SELECT id FROM vulnerabilities WHERE title = 'MongoDB Open Access' LIMIT 1), 'MongoDB Open Access', 'CRITICAL', 'OPEN', 'MongoDB database is publicly accessible without authentication.', 'Initial discovery of vulnerability'),
+    ((SELECT id FROM vulnerabilities WHERE title = 'Nginx Insecure Configuration' LIMIT 1), 'Nginx Insecure Configuration', 'MEDIUM', 'RESOLVED', 'Nginx server was configured with weak security settings.', 'Vulnerability resolved after security patches applied'),
+    ((SELECT id FROM vulnerabilities WHERE title = 'ElasticSearch Publicly Accessible' LIMIT 1), 'ElasticSearch Publicly Accessible', 'HIGH', 'OPEN', 'ElasticSearch service is accessible over the internet.', 'Initial discovery of vulnerability'),
     ((SELECT id FROM vulnerabilities WHERE title = 'SMTP Open Relay' LIMIT 1), 'SMTP Open Relay', 'HIGH', 'OPEN', 'SMTP server is misconfigured as an open relay.', 'Initial discovery of vulnerability', 2),
-    ((SELECT id FROM vulnerabilities WHERE title = 'Redis Insecure Configuration' LIMIT 1), 'Redis Insecure Configuration', 'CRITICAL', 'OPEN', 'Redis server is configured without authentication, allowing unauthorized access.', 'Initial discovery of vulnerability', 2),
-    ((SELECT id FROM vulnerabilities WHERE title = 'MySQL Weak Passwords' LIMIT 1), 'MySQL Weak Passwords', 'LOW', 'OPEN', 'MySQL service allows weak password authentication.', 'Initial discovery of vulnerability', 2),
-    ((SELECT id FROM vulnerabilities WHERE title = 'FTP Anonymous Login Allowed' LIMIT 1), 'FTP Anonymous Login Allowed', 'MEDIUM', 'OPEN', 'FTP service allows anonymous login without restrictions.', 'Initial discovery of vulnerability', 2),
-    ((SELECT id FROM vulnerabilities WHERE title = 'MariaDB SQL Injection Vulnerability' LIMIT 1), 'MariaDB SQL Injection Vulnerability', 'HIGH', 'OPEN', 'SQL Injection vulnerability found in MariaDB service.', 'Initial discovery of vulnerability', 2);
+    ((SELECT id FROM vulnerabilities WHERE title = 'Redis Insecure Configuration' LIMIT 1), 'Redis Insecure Configuration', 'CRITICAL', 'OPEN', 'Redis server is configured without authentication, allowing unauthorized access.', 'Initial discovery of vulnerability'),
+    ((SELECT id FROM vulnerabilities WHERE title = 'MySQL Weak Passwords' LIMIT 1), 'MySQL Weak Passwords', 'LOW', 'OPEN', 'MySQL service allows weak password authentication.', 'Initial discovery of vulnerability'),
+    ((SELECT id FROM vulnerabilities WHERE title = 'FTP Anonymous Login Allowed' LIMIT 1), 'FTP Anonymous Login Allowed', 'MEDIUM', 'OPEN', 'FTP service allows anonymous login without restrictions.', 'Initial discovery of vulnerability'),
+    ((SELECT id FROM vulnerabilities WHERE title = 'MariaDB SQL Injection Vulnerability' LIMIT 1), 'MariaDB SQL Injection Vulnerability', 'HIGH', 'OPEN', 'SQL Injection vulnerability found in MariaDB service.', 'Initial discovery of vulnerability');
 
 -- Re-enable foreign key checks after data insertion
 SET FOREIGN_KEY_CHECKS = 1;

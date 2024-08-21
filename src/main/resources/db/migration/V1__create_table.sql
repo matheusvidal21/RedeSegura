@@ -21,45 +21,16 @@ CREATE TABLE IF NOT EXISTS institutions (
                                             FOREIGN KEY (address_id) REFERENCES addresses(id)
 );
 
--- Create users table
-CREATE TABLE IF NOT EXISTS users (
-                                     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                                     name VARCHAR(255) NOT NULL,
-                                     email VARCHAR(255) NOT NULL,
-                                     password VARCHAR(255) NOT NULL,
-                                     institution_id BIGINT,
-                                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                                     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                                     FOREIGN KEY (institution_id) REFERENCES institutions(id) ON DELETE CASCADE
-);
-
--- Create roles table
-CREATE TABLE IF NOT EXISTS roles (
-                                     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                                     name VARCHAR(100) NOT NULL
-);
-
--- Create users_roles table
-CREATE TABLE IF NOT EXISTS users_roles (
-                                           user_id BIGINT,
-                                           role_id BIGINT,
-                                           PRIMARY KEY (user_id, role_id),
-                                           FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-                                           FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
-);
-
 -- Create servers table
 CREATE TABLE IF NOT EXISTS servers (
                                        id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                        name VARCHAR(255) NOT NULL,
                                        description TEXT,
                                        institution_id BIGINT,
-                                       responsible_id BIGINT,
                                        health VARCHAR(50),
                                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                                       FOREIGN KEY (institution_id) REFERENCES institutions(id) ON DELETE CASCADE,
-                                       FOREIGN KEY (responsible_id) REFERENCES users(id) ON DELETE SET NULL
+                                       FOREIGN KEY (institution_id) REFERENCES institutions(id) ON DELETE CASCADE
 );
 
 -- Create protocols table
@@ -113,16 +84,6 @@ CREATE TABLE IF NOT EXISTS vulnerabilities (
                                                FOREIGN KEY (service_id) REFERENCES services(id) ON DELETE CASCADE
 );
 
--- Create action_log table
-CREATE TABLE IF NOT EXISTS action_log (
-                                          id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                                          vulnerability_id BIGINT,
-                                          action TEXT,
-                                          performed_by BIGINT,
-                                          timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                                          FOREIGN KEY (vulnerability_id) REFERENCES vulnerabilities(id) ON DELETE CASCADE,
-                                          FOREIGN KEY (performed_by) REFERENCES users(id) ON DELETE CASCADE
-);
 
 CREATE TABLE IF NOT EXISTS vulnerability_history (
                                                      id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -132,8 +93,6 @@ CREATE TABLE IF NOT EXISTS vulnerability_history (
                                                      status VARCHAR(50),
                                                      description TEXT,
                                                      action_taken TEXT,
-                                                     changed_by BIGINT,
                                                      changed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                                                     FOREIGN KEY (vulnerability_id) REFERENCES vulnerabilities(id) ON DELETE CASCADE,
-                                                     FOREIGN KEY (changed_by) REFERENCES users(id) ON DELETE SET NULL
+                                                     FOREIGN KEY (vulnerability_id) REFERENCES vulnerabilities(id) ON DELETE CASCADE
 );
