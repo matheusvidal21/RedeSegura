@@ -1,1 +1,38 @@
-create.html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
+<header th:replace="fragments/navbar :: navbar"></header>
+<main class="container">
+    <h1>Servidores</h1>
+    <a th:href="@{/servers/create}" class="button">Novo Servidor</a>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Instituição</th>
+            <th>Saúde</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="server : ${servers}">
+            <td th:text="${server.id}"></td>
+            <td th:text="${server.name}"></td>
+            <td th:text="${server.institutionName}"></td>
+            <td th:text="${server.health}"></td>
+            <td>
+                <a th:href="@{/servers/{id}(id=${server.id})}" class="button">Detalhes</a>
+                <a th:href="@{/servers/edit/{id}(id=${server.id})}" class="button">Editar</a>
+                <form th:action="@{/servers/delete/{id}(id=${server.id})}" method="post" style="display:inline;">
+                    <button type="submit" class="button" onclick="return confirm('Você tem certeza que deseja excluir este servidor?');">Excluir</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

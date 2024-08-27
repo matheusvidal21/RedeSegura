@@ -22,8 +22,9 @@ public class ServiceMapper {
                 .ip(service.getIp())
                 .port(service.getPort())
                 .status(service.getStatus().getValue())
-                .protocol(service.getProtocols().stream().map(Protocol::getName).collect(Collectors.toSet()))
+                .protocols(service.getProtocols().stream().map(Protocol::getName).collect(Collectors.toSet()))
                 .serverName(service.getServer().getName())
+                .serverId(service.getServer().getId())
                 .build();
     }
 
@@ -32,7 +33,7 @@ public class ServiceMapper {
                 .name(serviceDto.getName())
                 .ip(serviceDto.getIp())
                 .port(serviceDto.getPort())
-                .status(ServiceStatus.UNKNOWN)
+                .status(ServiceStatus.fromString(serviceDto.getStatus()))
                 .protocols(protocols)
                 .server(server)
                 .build();

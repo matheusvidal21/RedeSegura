@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
+<header th:replace="fragments/navbar :: navbar"></header>
+<div class="container">
+    <h1>Editar Servidor</h1>
+    <form th:action="@{/servers/edit/{id}(id=${serverDto.id})}" th:object="${serverDto}" method="post">
+        <label for="name">Nome:</label>
+        <input type="text" id="name" th:field="*{name}" required>
+
+        <label for="institutionId">Instituição:</label>
+        <select id="institutionId" th:field="*{institutionId}">
+            <option th:each="institution : ${institutions}"
+                    th:value="${institution.id}"
+                    th:text="${institution.name}"
+                    th:selected="${institution.id == serverDto.institutionId}"></option>
+        </select>
+
+        <label for="health">Saúde:</label>
+        <select id="health" th:field="*{health}">
+            <option th:each="health : ${T(br.rnp.redesegura.models.enums.ServerHealth).values()}"
+                    th:value="${health.name()}"
+                    th:text="${health.value}"></option>
+        </select>
+
+        <button type="submit" onclick="return confirm('Você tem certeza que deseja salvar essas alterações?');">Salvar</button>
+    </form>
+</div>
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

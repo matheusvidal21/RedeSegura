@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header}"></head>
+<body>
+<header th:replace="~{fragments/navbar :: navbar}"></header>
+<div class="container">
+    <h1>Detalhes do Serviço</h1>
+    <p><strong>Nome:</strong> <span th:text="${service.name}"></span></p>
+    <p><strong>IP:</strong> <span th:text="${service.ip}"></span></p>
+    <p><strong>Porta:</strong> <span th:text="${service.port}"></span></p>
+    <p><strong>Status:</strong> <span th:text="${service.status}"></span></p>
+    <p><strong>Servidor:</strong> <span th:text="${service.serverName}"></span></p>
+    <p><strong>Protocolos:</strong> <span th:text="${service.protocols}"></span></p>
+
+    <a th:href="@{/services/edit/{id}(id=${service.id})}" class="button">Editar</a>
+    <form th:action="@{/services/delete/{id}(id=${service.id})}" method="post" style="display:inline;">
+        <button type="submit" class="button" onclick="return confirm('Você tem certeza que deseja excluir este serviço?');">Excluir</button>
+    </form>
+    <a th:href="@{/services}" class="button">Voltar</a>
+</div>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

@@ -15,6 +15,8 @@ import java.util.Set;
 @AllArgsConstructor
 public class ServiceDto {
 
+    private Long id;
+
     @NotBlank(message = "Name is required")
     private String name;
 
@@ -29,5 +31,7 @@ public class ServiceDto {
 
     @NotNull(message = "Server ID is required")
     private Long serverId;
+
+    private String status;
 
 }

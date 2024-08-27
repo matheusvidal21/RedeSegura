@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header}"></head>
+<body>
+<header th:replace="~{fragments/navbar :: navbar}"></header>
+<div class="container">
+    <h1>Criar Serviço</h1>
+    <form th:action="@{/services/create}" th:object="${serviceDto}" method="post">
+        <label for="name">Nome:</label>
+        <input type="text" id="name" th:field="*{name}" required>
+
+        <label for="ip">IP:</label>
+        <input type="text" id="ip" th:field="*{ip}" required>
+
+        <label for="port">Porta:</label>
+        <input type="number" id="port" th:field="*{port}" required>
+
+        <label for="protocols">Protocolos:</label>
+        <select id="protocols" th:field="*{protocols}" multiple>
+            <option th:each="protocol : ${protocols}"
+                    th:value="${protocol.name}"
+                    th:text="${protocol.name}"></option>
+        </select>
+
+        <label for="status">Status:</label>
+        <select id="status" th:field="*{status}">
+            <option th:each="status : ${T(br.rnp.redesegura.models.enums.ServiceStatus).values()}"
+                    th:value="${status.name()}"
+                    th:text="${status.value}"></option>
+        </select>
+
+        <label for="serverId">Servidor:</label>
+        <select id="serverId" th:field="*{serverId}">
+            <option th:each="server : ${servers}"
+                    th:value="${server.id}"
+                    th:text="${server.name}"></option>
+        </select>
+
+        <button type="submit">Salvar</button>
+    </form>
+</div>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

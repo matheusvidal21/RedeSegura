@@ -1,5 +1,6 @@
 package br.rnp.redesegura.controllers.view;
 
+import br.rnp.redesegura.controllers.routes.Routes;
 import br.rnp.redesegura.dto.InstitutionDto;
 import br.rnp.redesegura.services.InstitutionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/institutions")
+@RequestMapping(Routes.INSTITUTIONS_VIEW)
 public class InstitutionViewController {
 
     @Autowired

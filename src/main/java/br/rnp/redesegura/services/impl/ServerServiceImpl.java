@@ -13,6 +13,7 @@ import br.rnp.redesegura.services.ServerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,6 +47,8 @@ public class ServerServiceImpl implements ServerService {
     public ServerResponse create(ServerDto serverDto) {
         Institution institution = institutionRepository.findById(serverDto.getInstitutionId()).orElseThrow(() -> new NotFoundException("Institution not found"));
         Server serverEntity = ServerMapper.toEntity(serverDto, institution);
+        serverEntity.setCreatedAt(LocalDateTime.now());
+        serverEntity.setUpdatedAt(LocalDateTime.now());
         return ServerMapper.toResponse(serverRepository.save(serverEntity));
     }
 
@@ -54,6 +57,7 @@ public class ServerServiceImpl implements ServerService {
         Server existingServer = serverRepository.findById(id).orElseThrow(() -> new NotFoundException("Server not found"));
         Institution institution = institutionRepository.findById(serverDto.getInstitutionId()).orElseThrow(() -> new NotFoundException("Institution not found"));
         Server updatedServer = ServerMapper.toEntity(serverDto, institution);
+        updatedServer.setUpdatedAt(LocalDateTime.now());
         updatedServer.setId(existingServer.getId());
         return ServerMapper.toResponse(serverRepository.save(updatedServer));
     }

@@ -20,4 +20,12 @@ public interface Routes {
 
     String VULNERABILITY_TEST_VIEW = "/vulnerability-test";
 
+    String INSTITUTIONS_VIEW = "/institutions";
+
+    String SERVERS_VIEW = "/servers";
+
+    String SERVICES_VIEW = "/services";
+
+    String VULNERABILITIES_VIEW = "/vulnerabilities";
+
 }

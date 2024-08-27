@@ -1,18 +1,18 @@
 package br.rnp.redesegura.dto.response;
 
-import br.rnp.redesegura.models.Protocol;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.Set;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ServiceResponse {
 
     private Long id;
@@ -23,10 +23,12 @@ public class ServiceResponse {
 
     private Long port;
 
-    private Set<String> protocol;
+    private Set<String> protocols;
 
     private String status;
 
     private String serverName;
+
+    private Long serverId;
 
 }

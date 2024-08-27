@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
+<header th:replace="fragments/navbar :: navbar"></header>
+<div class="container">
+    <h1>Detalhes do Servidor</h1>
+    <p><strong>Nome:</strong> <span th:text="${server.name}"></span></p>
+    <p><strong>Instituição:</strong> <span th:text="${server.institutionName}"></span></p>
+    <p><strong>Saúde:</strong> <span th:text="${server.health}"></span></p>
+    <p><strong>Criado em:</strong> <span th:text="${server.createdAt}"></span></p>
+    <p><strong>Atualizado em:</strong> <span th:text="${server.updatedAt}"></span></p>
+
+
+    <a th:href="@{/servers/edit/{id}(id=${server.id})}" class="button">Editar</a>
+    <form th:action="@{/servers/delete/{id}(id=${server.id})}" method="post" style="display:inline;">
+        <button type="submit" class="button" onclick="return confirm('Você tem certeza que deseja excluir este servidor?');">Excluir</button>
+    </form>
+    <a th:href="@{/servers}" class="button">Voltar</a>
+</div>
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

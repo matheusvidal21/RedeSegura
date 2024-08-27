@@ -40,6 +40,13 @@ public class InstitutionServiceImpl implements InstitutionService {
     }
 
     @Override
+    public InstitutionResponse findByName(String name) {
+        Institution institution = institutionRepository.findByName(name)
+                .orElseThrow(() -> new NotFoundException("Institution not found"));
+        return InstitutionMapper.toResponse(institution);
+    }
+
+    @Override
     public InstitutionResponse create(InstitutionDto institutionDto) {
         Address address = AddressMapper.toEntity(institutionDto.getAddress());
         address = addressRepository.save(address);

@@ -120,3 +120,15 @@ footer {
     bottom: 0;
     width: 100%;
 }
+
+.text-danger {
+    color: red;
+}
+
+.text-warning {
+    color: yellow;
+}
+
+.text-success {
+    color: green;
+}

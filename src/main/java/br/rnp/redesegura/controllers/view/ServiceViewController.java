@@ -1,18 +1,31 @@
 package br.rnp.redesegura.controllers.view;
 
+import br.rnp.redesegura.controllers.routes.Routes;
 import br.rnp.redesegura.dto.ServiceDto;
+import br.rnp.redesegura.dto.response.ServiceResponse;
+import br.rnp.redesegura.models.enums.ServiceStatus;
+import br.rnp.redesegura.services.ProtocolService;
+import br.rnp.redesegura.services.ServerService;
 import br.rnp.redesegura.services.ServiceEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
+
 @Controller
-@RequestMapping("/services")
+@RequestMapping(Routes.SERVICES_VIEW)
 public class ServiceViewController {
 
     @Autowired
     private ServiceEntityService serviceEntityService;
+
+    @Autowired
+    private ServerService serverService;
+
+    @Autowired
+    private ProtocolService protocolService;
 
     @GetMapping
     public String list(Model model) {
@@ -29,6 +42,8 @@ public class ServiceViewController {
     @GetMapping("/create")
     public String createForm(Model model) {
         model.addAttribute("serviceDto", new ServiceDto());
+        model.addAttribute("servers", serverService.findAll());
+        model.addAttribute("protocols", protocolService.findAll());
         return "service/create";
     }
 
@@ -40,7 +55,20 @@ public class ServiceViewController {
 
     @GetMapping("/edit/{id}")
     public String editForm(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("serviceDto", serviceEntityService.findById(id));
+        ServiceResponse serviceResponse = serviceEntityService.findById(id);
+        ServiceDto serviceDto = ServiceDto.builder()
+                .id(id)
+                .ip(serviceResponse.getIp())
+                .name(serviceResponse.getName())
+                .protocols(serviceResponse.getProtocols() != null ? serviceResponse.getProtocols() : new HashSet<>())
+                .port(serviceResponse.getPort())
+                .status(ServiceStatus.fromString(serviceResponse.getStatus()).name())
+                .serverId(serviceResponse.getServerId())
+                .build();
+
+        model.addAttribute("serviceDto", serviceDto);
+        model.addAttribute("servers", serverService.findAll());
+        model.addAttribute("protocols", protocolService.findAll());
         return "service/edit";
     }
 

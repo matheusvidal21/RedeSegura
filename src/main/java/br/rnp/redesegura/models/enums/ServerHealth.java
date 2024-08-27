@@ -8,7 +8,8 @@ public enum ServerHealth {
     PARTIALLY_OPERATIONAL("Partially Operational"),
     DEGRADED("Degraded"),
     WARNING("Warning"),
-    MAINTENANCE("Maintenance");
+    MAINTENANCE("Maintenance"),
+    UNKNOWN("Unknown");
 
     private String value;
 
@@ -22,7 +23,7 @@ public enum ServerHealth {
 
     public static ServerHealth fromValue(String value) {
         return Arrays.stream(ServerHealth.values())
-                .filter(sh -> sh.getValue().equals(value))
+                .filter(sh -> sh.getValue().equalsIgnoreCase(value))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Invalid value: " + value));
     }

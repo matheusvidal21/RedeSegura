@@ -1,1 +1,42 @@
-create.html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header}"></head>
+<body>
+<header th:replace="~{fragments/navbar :: navbar}"></header>
+<main class="container">
+    <h1>Serviços</h1>
+    <a th:href="@{/services/create}" class="button">Novo Serviço</a>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>IP</th>
+            <th>Porta</th>
+            <th>Status</th>
+            <th>Servidor</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="service : ${services}">
+            <td th:text="${service.id}"></td>
+            <td th:text="${service.name}"></td>
+            <td th:text="${service.ip}"></td>
+            <td th:text="${service.port}"></td>
+            <td th:text="${service.status}"></td>
+            <td th:text="${service.serverName}"></td>
+            <td>
+                <a th:href="@{/services/{id}(id=${service.id})}" class="button">Detalhes</a>
+                <a th:href="@{/services/edit/{id}(id=${service.id})}" class="button">Editar</a>
+                <form th:action="@{/services/delete/{id}(id=${service.id})}" method="post" style="display:inline;">
+                    <button type="submit" class="button" onclick="return confirm('Você tem certeza que deseja excluir este serviço?');">Excluir</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

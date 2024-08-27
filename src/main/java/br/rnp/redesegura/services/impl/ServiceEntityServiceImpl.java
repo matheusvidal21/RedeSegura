@@ -78,7 +78,7 @@ public class ServiceEntityServiceImpl implements ServiceEntityService {
         service.setProtocols(new HashSet<>(protocols));
         service.setIp(serviceDto.getIp());
         service.setPort(serviceDto.getPort());
-        service.setStatus(service.getStatus());
+        service.setStatus(ServiceStatus.fromString(serviceDto.getStatus()));
         service.setServer(server);
 
         return ServiceMapper.toResponse(serviceRepository.save(service));
