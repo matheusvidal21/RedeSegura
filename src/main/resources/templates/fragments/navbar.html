@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<header th:fragment="navbar">
+    <div class="logo">
+        <img th:src="@{/images/logo.png}" alt="Logo Redesegura">
+    </div>
+<nav>
+    <nav id="navbar">
+        <ul>
+            <li><a th:href="@{/institutions}">Instituições</a></li>
+            <li><a th:href="@{/servers}">Servidores</a></li>
+            <li><a th:href="@{/services}">Serviços</a></li>
+            <li><a th:href="@{/vulnerabilities}">Vulnerabilidades</a></li>
+            <li><a th:href="@{/vulnerability-test}">Testar Vulnerabilidades</a></li>
+        </ul>
+    </nav>
+</nav>
+</header>

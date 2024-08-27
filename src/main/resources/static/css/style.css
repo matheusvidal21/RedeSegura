@@ -1,0 +1,122 @@
+/* static/css/style.css */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    background-color: #fff;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+header img {
+    max-width: 300px;
+}
+
+#navbar {
+    background-color: #0044cc;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+#navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+#navbar li {
+    display: inline-block;
+    padding: 14px 20px;
+}
+
+#navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#navbar a:hover {
+    background-color: #003399;
+    padding: 14px 20px;
+    border-radius: 4px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #0044cc;
+    color: white;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.table tr:hover {
+    background-color: #ddd;
+}
+
+a.button {
+    background-color: #0044cc;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+a.button:hover {
+    background-color: #003399;
+}
+
+form .button {
+    background-color: #cc0000;
+    margin-right: 0;
+}
+
+form .button:hover {
+    background-color: #a00000;
+}
+
+footer {
+    background-color: #0044cc;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}

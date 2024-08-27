@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
+<header th:replace="fragments/navbar :: navbar"></header>
+<div class="container">
+    <h1>Criar Instituição</h1>
+    <form th:action="@{/institutions/create}" th:object="${institutionDto}" method="post">
+        <label for="name">Nome:</label>
+        <input type="text" id="name" th:field="*{name}" required>
+
+        <label for="contact">Contato:</label>
+        <input type="text" id="contact" th:field="*{contact}" required>
+
+        <label for="street">Rua:</label>
+        <input type="text" id="street" th:field="*{address.street}" required>
+
+        <label for="city">Cidade:</label>
+        <input type="text" id="city" th:field="*{address.city}" required>
+
+        <label for="state">Estado:</label>
+        <input type="text" id="state" th:field="*{address.state}" required>
+
+        <label for="country">País:</label>
+        <input type="text" id="country" th:field="*{address.country}" required>
+
+        <label for="postalCode">Código Postal:</label>
+        <input type="text" id="postalCode" th:field="*{address.postalCode}" required>
+
+        <button type="submit">Salvar</button>
+    </form>
+</div>
+<footer th:include="fragments/footer :: footer"></footer>
+</body>
+</html>

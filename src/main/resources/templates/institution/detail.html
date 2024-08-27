@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
+<header th:replace="fragments/navbar :: navbar"></header>
+<div class="container">
+    <h1>Detalhes da Instituição</h1>
+    <p><strong>Nome:</strong> <span th:text="${institution.name}"></span></p>
+    <p><strong>Contato:</strong> <span th:text="${institution.contact}"></span></p>
+    <p><strong>Endereço:</strong> <span th:text="${institution.address.getFullAddress()}"></span></p>
+
+    <a th:href="@{/institutions/edit/{id}(id=${institution.id})}" class="button">Editar</a>
+    <form th:action="@{/institutions/delete/{id}(id=${institution.id})}" method="post" style="display:inline;">
+        <button type="submit" class="button" onclick="return confirm('Você tem certeza que deseja excluir esta instituição?');">Excluir</button>
+    </form>
+    <a th:href="@{/institutions}" class="button">Voltar</a>
+</div>
+<footer th:include="fragments/footer :: footer"></footer>
+</body>
+</html>
