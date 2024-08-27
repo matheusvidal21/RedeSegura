@@ -110,6 +110,20 @@ form .button:hover {
     background-color: #a00000;
 }
 
+form .buttonBlue {
+    background-color: #0044cc;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+form .buttonBlue:hover {
+    background-color: #003399;
+}
+
 footer {
     background-color: #0044cc;
     color: white;
