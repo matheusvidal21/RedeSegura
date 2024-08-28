@@ -1,9 +1,9 @@
 package br.rnp.redesegura.services.impl;
 
-import br.rnp.redesegura.dto.ServerDto;
-import br.rnp.redesegura.dto.response.ServerResponse;
-import br.rnp.redesegura.exception.NotFoundException;
-import br.rnp.redesegura.mapper.ServerMapper;
+import br.rnp.redesegura.dtos.ServerDto;
+import br.rnp.redesegura.dtos.response.ServerResponse;
+import br.rnp.redesegura.exceptions.NotFoundException;
+import br.rnp.redesegura.mappers.ServerMapper;
 import br.rnp.redesegura.models.Institution;
 import br.rnp.redesegura.models.Server;
 import br.rnp.redesegura.repositories.InstitutionRepository;

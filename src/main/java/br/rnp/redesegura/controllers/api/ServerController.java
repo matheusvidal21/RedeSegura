@@ -2,8 +2,8 @@ package br.rnp.redesegura.controllers.api;
 
 
 import br.rnp.redesegura.controllers.routes.Routes;
-import br.rnp.redesegura.dto.ServerDto;
-import br.rnp.redesegura.dto.response.ServerResponse;
+import br.rnp.redesegura.dtos.ServerDto;
+import br.rnp.redesegura.dtos.response.ServerResponse;
 import br.rnp.redesegura.services.ServerService;
 import io.swagger.annotations.ApiOperation;
 import jakarta.validation.Valid;

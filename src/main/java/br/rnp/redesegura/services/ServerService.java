@@ -1,7 +1,7 @@
 package br.rnp.redesegura.services;
 
-import br.rnp.redesegura.dto.ServerDto;
-import br.rnp.redesegura.dto.response.ServerResponse;
+import br.rnp.redesegura.dtos.ServerDto;
+import br.rnp.redesegura.dtos.response.ServerResponse;
 
 import java.util.List;
 

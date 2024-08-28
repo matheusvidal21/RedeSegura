@@ -1,7 +1,7 @@
 package br.rnp.redesegura.services;
 
-import br.rnp.redesegura.dto.ServiceDto;
-import br.rnp.redesegura.dto.response.ServiceResponse;
+import br.rnp.redesegura.dtos.ServiceDto;
+import br.rnp.redesegura.dtos.response.ServiceResponse;
 import br.rnp.redesegura.models.enums.ServiceStatus;
 
 import java.util.List;

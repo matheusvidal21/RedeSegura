@@ -1,8 +1,8 @@
 package br.rnp.redesegura.controllers.view;
 
 import br.rnp.redesegura.controllers.routes.Routes;
-import br.rnp.redesegura.dto.ServiceDto;
-import br.rnp.redesegura.dto.response.ServiceResponse;
+import br.rnp.redesegura.dtos.ServiceDto;
+import br.rnp.redesegura.dtos.response.ServiceResponse;
 import br.rnp.redesegura.models.enums.ServiceStatus;
 import br.rnp.redesegura.services.ProtocolService;
 import br.rnp.redesegura.services.ServerService;

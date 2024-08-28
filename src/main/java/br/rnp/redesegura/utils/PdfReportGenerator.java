@@ -1,7 +1,7 @@
     package br.rnp.redesegura.utils;
 
-    import br.rnp.redesegura.dto.response.VulnerabilityTestResponse;
-    import br.rnp.redesegura.exception.NotFoundException;
+    import br.rnp.redesegura.dtos.response.VulnerabilityTestResponse;
+    import br.rnp.redesegura.exceptions.NotFoundException;
     import br.rnp.redesegura.models.Vulnerability;
     import br.rnp.redesegura.models.enums.TestStatus;
     import br.rnp.redesegura.repositories.VulnerabilityRepository;

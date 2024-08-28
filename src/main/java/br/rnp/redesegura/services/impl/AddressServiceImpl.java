@@ -1,9 +1,9 @@
 package br.rnp.redesegura.services.impl;
 
-import br.rnp.redesegura.dto.AddressDto;
-import br.rnp.redesegura.dto.response.AddressResponse;
-import br.rnp.redesegura.exception.NotFoundException;
-import br.rnp.redesegura.mapper.AddressMapper;
+import br.rnp.redesegura.dtos.AddressDto;
+import br.rnp.redesegura.dtos.response.AddressResponse;
+import br.rnp.redesegura.exceptions.NotFoundException;
+import br.rnp.redesegura.mappers.AddressMapper;
 import br.rnp.redesegura.models.Address;
 import br.rnp.redesegura.repositories.AddressRepository;
 import br.rnp.redesegura.services.AddressService;

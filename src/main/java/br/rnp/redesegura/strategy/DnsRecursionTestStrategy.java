@@ -1,7 +1,7 @@
 package br.rnp.redesegura.strategy;
 
-import br.rnp.redesegura.dto.response.VulnerabilityTestResponse;
-import br.rnp.redesegura.exception.FailedTestException;
+import br.rnp.redesegura.dtos.response.VulnerabilityTestResponse;
+import br.rnp.redesegura.exceptions.FailedTestException;
 import br.rnp.redesegura.models.Vulnerability;
 import br.rnp.redesegura.models.enums.TestStatus;
 
@@ -14,7 +14,7 @@ public class DnsRecursionTestStrategy implements VulnerabilityTestStrategy {
         try {
             String ip = vulnerability.getService().getIp();
             // Comando dig a ser executado
-            String command = "wsl dig google.com A @" + ip;
+            String command = "docker exec tester dig google.com A @" + ip;
 
             // Executa o comando
             ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));

@@ -5,13 +5,21 @@ SET FOREIGN_KEY_CHECKS = 0;
 INSERT INTO addresses (street, city, state, country, postal_code)
 VALUES
     ('Av. Senador Salgado Filho, 3000', 'Natal', 'RN', 'Brasil', '59078-970'), -- UFRN
-    ('Av. da Universidade, 2853', 'Fortaleza', 'CE', 'Brasil', '60020-181');   -- UFC
+    ('Av. da Universidade, 2853', 'Fortaleza', 'CE', 'Brasil', '60020-181'),   -- UFC
+    ('Rua Fictícia, 123', 'Cidade Exemplo', 'EX', 'Brasil', '00000-000');
 
 -- Insert institutions
 INSERT INTO institutions (name, address_id, contact)
 VALUES
     ('Universidade Federal do Rio Grande do Norte', 1, 'contato@ufrn.br'), -- UFRN
-    ('Universidade Federal do Ceará', 2, 'contato@ufc.br');                -- UFC
+    ('Universidade Federal do Ceará', 2, 'contato@ufc.br'),                -- UFC
+    ('Instituição Fictícia', 3, 'contato@instituicaoficticia.br');
+
+-- Insert servers for Instituição Fictícia
+INSERT INTO servers (name, description, institution_id, health)
+VALUES
+    ('Servidor de Teste Redis', 'Servidor para testar serviços Redis (vulnerável e seguro)', 3, 'PARTIALLY_OPERATIONAL');
+
 
 -- Insert servers for UFRN
 INSERT INTO servers (name, description, institution_id, health)
@@ -22,6 +30,7 @@ VALUES
     ('Servidor C', 'Servidor de desenvolvimento', 1, 'DEGRADED'),
     ('Servidor D', 'Servidor de BI', 1, 'OPERATIONAL'),
     ('Servidor E', 'Servidor de armazenamento', 1,  'PARTIALLY_OPERATIONAL');
+
 
 -- Insert servers for UFC
 INSERT INTO servers (name, description, institution_id, health)
@@ -88,6 +97,12 @@ VALUES
     ('Memcached Service', '200.130.38.130', 11211, 7), -- Memcached
     ('SLP Service', '200.130.38.130', 427, 7); -- SLP
 
+-- Insert services for the Redis servers
+INSERT INTO services (name, ip, port, server_id)
+VALUES
+    ('Redis Vulnerable', '172.30.1.3', 6379, (SELECT id FROM servers WHERE name = 'Servidor de Teste Redis' LIMIT 1)), -- Redis Vulnerable
+    ('Redis Secure', '172.30.1.4', 6379, (SELECT id FROM servers WHERE name = 'Servidor de Teste Redis' LIMIT 1));    -- Redis Secure
+
 -- Associando Protocolos aos Serviços no Servidor Vulnerável
 INSERT INTO service_protocols (service_id, protocol_id)
 VALUES
@@ -133,6 +148,19 @@ VALUES
     ('Exposed SSDP', 'Exposição indevida do serviço SSDP, que deve operar apenas em ambientes locais.'),
     ('Exposed Memcached', 'Exposição do serviço Memcached, projetado para operação local, à internet, criando uma vulnerabilidade.'),
     ('Exposed SLP', 'Exposição do serviço SLP à internet, quando deveria ser utilizado apenas localmente.');
+
+-- Insert vulnerabilities for the Redis services
+INSERT INTO vulnerabilities (title, severity, status, server_id, service_id, type_id)
+VALUES
+    ('Redis Sem Autenticação - Ambiente Vulnerável', 'HIGH', 'OPEN',
+     (SELECT id FROM servers WHERE name = 'Servidor de Teste Redis' LIMIT 1),
+    (SELECT id FROM services WHERE name = 'Redis Vulnerable' AND ip = '172.30.1.3' LIMIT 1),
+    (SELECT id FROM vulnerability_types WHERE name = 'Redis No Authentication' LIMIT 1)),
+
+    ('Redis Com Autenticação - Ambiente Seguro', 'LOW', 'RESOLVED',
+     (SELECT id FROM servers WHERE name = 'Servidor de Teste Redis' LIMIT 1),
+     (SELECT id FROM services WHERE name = 'Redis Secure' AND ip = '172.30.1.4' LIMIT 1),
+     (SELECT id FROM vulnerability_types WHERE name = 'Redis No Authentication' LIMIT 1));
 
 -- Vulnerabilidades no Servidor Vulnerável
 INSERT INTO vulnerabilities (title, severity, status, server_id, service_id, type_id)

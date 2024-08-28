@@ -1,8 +1,8 @@
 package br.rnp.redesegura.controllers.view;
 
 import br.rnp.redesegura.controllers.routes.Routes;
-import br.rnp.redesegura.dto.ServerDto;
-import br.rnp.redesegura.dto.response.ServerResponse;
+import br.rnp.redesegura.dtos.ServerDto;
+import br.rnp.redesegura.dtos.response.ServerResponse;
 import br.rnp.redesegura.services.InstitutionService;
 import br.rnp.redesegura.services.ServerService;
 import org.springframework.beans.factory.annotation.Autowired;

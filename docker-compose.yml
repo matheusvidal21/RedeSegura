@@ -12,12 +12,40 @@ services:
     volumes:
       - mysql-data:/data/db
     networks:
-      - backend
+      backend:
+        ipv4_address: 172.30.1.2
+
+  redis-vulnerable:
+    build: ./dockerfiles/vulnerable
+    container_name: redis-vulnerable
+    ports:
+      - "6381:6379"
+    networks:
+      backend:
+        ipv4_address: 172.30.1.3
+
+  redis-secure:
+    build: ./dockerfiles/secure
+    container_name: redis-secure
+    ports:
+      - "6382:6378"
+    networks:
+      backend:
+        ipv4_address: 172.30.1.4
+
+  tester:
+    build: ./dockerfiles/tester
+    container_name: tester
+    networks:
+      backend:
+        ipv4_address: 172.30.1.5
 
 networks:
   backend:
     driver: bridge
-
+    ipam:
+      config:
+        - subnet: 172.30.0.0/16
 
 volumes:
   mysql-data:

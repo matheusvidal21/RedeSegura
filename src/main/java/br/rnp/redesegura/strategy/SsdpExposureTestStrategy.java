@@ -1,18 +1,13 @@
 package br.rnp.redesegura.strategy;
 
-import br.rnp.redesegura.dto.response.VulnerabilityTestResponse;
-import br.rnp.redesegura.exception.FailedTestException;
-import br.rnp.redesegura.models.Protocol;
+import br.rnp.redesegura.dtos.response.VulnerabilityTestResponse;
+import br.rnp.redesegura.exceptions.FailedTestException;
 import br.rnp.redesegura.models.Vulnerability;
 import br.rnp.redesegura.models.enums.TestStatus;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.time.LocalDateTime;
-import java.util.stream.Collectors;
 
 public class SsdpExposureTestStrategy implements VulnerabilityTestStrategy {
 

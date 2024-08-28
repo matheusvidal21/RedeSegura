@@ -1,15 +1,12 @@
 package br.rnp.redesegura.strategy;
 
-import br.rnp.redesegura.dto.response.VulnerabilityTestResponse;
-import br.rnp.redesegura.exception.FailedTestException;
-import br.rnp.redesegura.models.Protocol;
+import br.rnp.redesegura.dtos.response.VulnerabilityTestResponse;
+import br.rnp.redesegura.exceptions.FailedTestException;
 import br.rnp.redesegura.models.Vulnerability;
 import br.rnp.redesegura.models.enums.TestStatus;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.time.LocalDateTime;
-import java.util.stream.Collectors;
 
 public class NtpDdosAmplificationTestStrategy implements VulnerabilityTestStrategy {
     @Override
@@ -18,7 +15,7 @@ public class NtpDdosAmplificationTestStrategy implements VulnerabilityTestStrate
             String ip = vulnerability.getService().getIp();
             Long port = vulnerability.getService().getPort();
             // Comando nmap a ser executado
-            String command = "wsl nmap -sU -pU:" + port + " -Pn -n --script=ntp-monlist " + ip;
+            String command = "docker exec tester nmap -sU -pU:" + port + " -Pn -n --script=ntp-monlist " + ip;
 
             // Executa o comando
             ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));

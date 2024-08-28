@@ -1,15 +1,12 @@
 package br.rnp.redesegura.strategy;
 
-import br.rnp.redesegura.dto.response.VulnerabilityTestResponse;
-import br.rnp.redesegura.exception.FailedTestException;
-import br.rnp.redesegura.models.Protocol;
+import br.rnp.redesegura.dtos.response.VulnerabilityTestResponse;
+import br.rnp.redesegura.exceptions.FailedTestException;
 import br.rnp.redesegura.models.Vulnerability;
 import br.rnp.redesegura.models.enums.TestStatus;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.time.LocalDateTime;
-import java.util.stream.Collectors;
 
 public class NetbiosExposureTestStrategy implements VulnerabilityTestStrategy {
     @Override
@@ -18,7 +15,7 @@ public class NetbiosExposureTestStrategy implements VulnerabilityTestStrategy {
             String ip = vulnerability.getService().getIp();
 
             // Comando nmblookup a ser executado
-            String command = "wsl nmblookup -A " + ip;
+            String command = "docker exec tester nmblookup -A " + ip;
 
             // Executa o comando
             ProcessBuilder processBuilder = new ProcessBuilder(command.split(" "));

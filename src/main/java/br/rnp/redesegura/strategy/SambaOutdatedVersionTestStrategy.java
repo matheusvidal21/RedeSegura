@@ -1,14 +1,12 @@
 package br.rnp.redesegura.strategy;
 
-import br.rnp.redesegura.dto.response.VulnerabilityTestResponse;
-import br.rnp.redesegura.exception.FailedTestException;
-import br.rnp.redesegura.models.Protocol;
+import br.rnp.redesegura.dtos.response.VulnerabilityTestResponse;
+import br.rnp.redesegura.exceptions.FailedTestException;
 import br.rnp.redesegura.models.Vulnerability;
 import br.rnp.redesegura.models.enums.TestStatus;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 public class SambaOutdatedVersionTestStrategy implements VulnerabilityTestStrategy {
@@ -18,9 +16,9 @@ public class SambaOutdatedVersionTestStrategy implements VulnerabilityTestStrate
             String ip = vulnerability.getService().getIp();
 
             // Primeiro comando tenta usar o protocolo mais recente
-            String commandMaxProtocol = "wsl smbclient -L \\\\" + ip + " -N --option='client max protocol=SMB3'";
+            String commandMaxProtocol = "docker tester tools smbclient -L \\\\" + ip + " -N --option='client max protocol=SMB3'";
             // Comando de fallback para usar o protocolo mais antigo, se o primeiro falhar
-            String commandMinProtocol = "wsl smbclient -L \\\\" + ip + " -N --option='client min protocol=NT1'";
+            String commandMinProtocol = "docker tester tools smbclient -L \\\\" + ip + " -N --option='client min protocol=NT1'";
 
             // Executa o primeiro comando
             ProcessBuilder processBuilder = new ProcessBuilder(commandMaxProtocol.split(" "));
