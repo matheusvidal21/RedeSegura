@@ -55,7 +55,7 @@ A aplicação é capaz de testar uma variedade de vulnerabilidades:
   
 - **NetBIOS Exposure**: Exposição de informações sensíveis devido a configurações inadequadas do NetBIOS
 
-- SNMP Public Community**: Exposição de comunidades SNMP públicas, permitindo potencial manipulação e ataques de DDoS.
+- **SNMP Public Community**: Exposição de comunidades SNMP públicas, permitindo potencial manipulação e ataques de DDoS.
 
 - **Samba Outdated Version**: Vulnerabilidade em versões desatualizadas do Samba, suscetíveis a escaneamento de portas e acessos não autorizados.
 
