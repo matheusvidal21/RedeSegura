@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<body>
+<header th:replace="fragments/navbar :: navbar"></header>
+<main class="container">
+    <h1>Dashboard</h1>
+
+    <!-- Dropdown para selecionar a Instituição -->
+    <form th:action="@{/}" method="get">
+        <label for="institutionSelect">Selecionar Instituição:</label>
+        <select id="institutionSelect" name="institutionId">
+            <option value="" th:text="'Visão geral'"></option>
+            <option th:each="institution : ${institutions}"
+                    th:value="${institution.id}"
+                    th:text="${institution.name}"
+                    th:selected="${institution.id == institutionId}">
+            </option>
+        </select>
+        <button type="submit" class="buttonBlue">Filtrar</button>
+    </form>
+
+    <div th:if="${institutionId}">
+        <h2 th:text="'Dashboard da Instituição: ' + ${institutionId}"></h2>
+        <p>Vulnerabilidades Abertas: <span th:text="${openVulnerabilities}"></span></p>
+        <p>Vulnerabilidades Resolvidas: <span th:text="${resolvedVulnerabilities}"></span></p>
+        <p>Vulnerabilidades Não Resolvidas: <span th:text="${notResolvedVulnerabilities}"></span></p>
+        <p>Vulnerabilidades de Alta Severidade: <span th:text="${highSeverityVulnerabilities}"></span></p>
+        <p>Servidores Degradados: <span th:text="${degradedServers}"></span></p>
+        <p>Servidores Operacionais: <span th:text="${operationalServers}"></span></p>
+    </div>
+
+    <div th:if="${institutionId == null}">
+        <h2>Visão Geral</h2>
+        <p>Total de Instituições: <span th:text="${totalInstitutions}"></span></p>
+        <p>Total de Vulnerabilidades Abertas: <span th:text="${totalOpenVulnerabilities}"></span></p>
+        <p>Total de Vulnerabilidades Resolvidas: <span th:text="${totalResolvedVulnerabilities}"></span></p>
+        <p>Total de Vulnerabilidades Não Resolvidas: <span th:text="${totalNotResolvedVulnerabilities}"></span></p>
+        <p>Total de Vulnerabilidades de Alta Severidade: <span th:text="${totalHighSeverityVulnerabilities}"></span></p>
+        <p>Total de Servidores Degradados: <span th:text="${totalDegradedServers}"></span></p>
+        <p>Total de Servidores Operacionais: <span th:text="${totalOperationalServers}"></span></p>
+    </div>
+
+</main>
+<footer th:replace="fragments/footer :: footer"></footer>
+</body>
+</html>

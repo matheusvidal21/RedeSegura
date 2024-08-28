@@ -22,8 +22,8 @@
             <td th:text="${institution.contact}"></td>
             <td>
                 <a th:href="@{/institutions/{id}(id=${institution.id})}" class="button">Detalhes</a>
-                <a th:href="@{/institutions/edit/{id}(id=${institution.id})}" class="button">Editar</a>
-                <form th:action="@{/institutions/delete/{id}(id=${institution.id})}" method="post" style="display:inline;">
+                <a th:href="@{/institutions/edit/{id}(id=${institution.id})}" class="button" >Editar</a>
+                <form th:action="@{/institutions/delete/{id}(id=${institution.id})}" method="post">
                     <button type="submit" class="button" onclick="return confirm('Você tem certeza que deseja excluir esta instituição?');">Excluir</button>
                 </form>
             </td>

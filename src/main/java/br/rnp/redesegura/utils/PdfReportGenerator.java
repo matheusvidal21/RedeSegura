@@ -35,10 +35,11 @@
         @Value("${image_logo.path}")
         private String logoPath;
 
-        public void generatePdfReport(VulnerabilityTestResponse vulnerabilityTestResponse) throws DocumentException, IOException {
+        public String generatePdfReport(VulnerabilityTestResponse vulnerabilityTestResponse) throws DocumentException, IOException {
             Document document = new Document();
-            String fileName = reportDirectory  + "report_" + vulnerabilityTestResponse.getTypeTest().toUpperCase(Locale.ROOT).replaceAll("\\s", "") + "_" + vulnerabilityTestResponse.getTestedAt().replaceAll("[:\\\\/*?|<>]", "") + ".pdf";
-            PdfWriter.getInstance(document, new FileOutputStream(fileName));
+            String fileName = "report_" + vulnerabilityTestResponse.getTypeTest().toUpperCase(Locale.ROOT).replaceAll("\\s", "") + "_" + vulnerabilityTestResponse.getTestedAt().replaceAll("[:\\\\/*?|<>]", "") + ".pdf";
+            String filePath = reportDirectory  + "report_" + vulnerabilityTestResponse.getTypeTest().toUpperCase(Locale.ROOT).replaceAll("\\s", "") + "_" + vulnerabilityTestResponse.getTestedAt().replaceAll("[:\\\\/*?|<>]", "") + ".pdf";
+            PdfWriter.getInstance(document, new FileOutputStream(filePath));
 
             document.open();
 
@@ -151,6 +152,7 @@
             }
 
             document.close();
+            return fileName;
         }
 
         private void addTextToDocument(Document document, VulnerabilityTestResponse vulnerabilityTestResponse, Font font, Font boldFont) throws DocumentException {
